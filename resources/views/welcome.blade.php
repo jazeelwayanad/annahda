@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta name="og:site_name" content="Annahdha">
-    <title>Annahdha</title>
+    <title>Annahda</title>
     <meta name="og:title" content="Annahdha">
     <meta name="og:description" content="Annahdha">
     <meta name="description" content="Annahdha">
