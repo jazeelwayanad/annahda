@@ -49,7 +49,7 @@
                 @isset($header_categories)
                 @foreach ($header_categories as $item)
                 <li>
-                    <a href="#" class="text-black hover:text-primary-500 dark:text-white">{{$item->name}}</a>
+                    <a href="{{route('category.article', ['category' => $item->id])}}" class="text-black hover:text-primary-500 dark:text-white">{{$item->name}}</a>
                 </li>
                 @endforeach
                 @endisset

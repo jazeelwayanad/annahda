@@ -17,6 +17,7 @@ Route::get('/dashboard', function () {
     return redirect(route('app.dashboard'));
 })->middleware('auth')->name('dashboard');
 
+Route::get('article-list/{category}', [HomeController::class, 'getArticles'])->name('category.article');
 Route::get('article/{category}/{slug}', [App\BlogController::class, 'show'])->name('view-article');
 // auth routes
 Route::name('auth.')->group(function () {

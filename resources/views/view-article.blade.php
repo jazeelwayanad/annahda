@@ -3,8 +3,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="og:site_name" content="Annahdha">
+    <title>{{ $article->meta_title ? $article->meta_title : "Annahda"}}</title>
+    <meta name="og:title" content="{{ $article->og_title ? $article->og_title : "Annahda"}}">
+    <meta name="og:description" content="{{ $article->og_description ? $article->og_description : "Annahda"}}">
+    <meta name="description" content="{{ $article->meta_description ? $article->meta_description : "Annahda"}}">
+    <meta name="robots" content="index, follow" />
+    <meta name="og:type" content="website" />
+    <meta name="og:url" content="{{env('APP_URL')}}">
+    <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon">
 
-    <title>Annahdha</title>
 
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])

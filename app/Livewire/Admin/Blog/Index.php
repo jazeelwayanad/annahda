@@ -40,10 +40,6 @@ class Index extends Component implements HasForms, HasTable
                 Columns\TextColumn::make('updated_at')->label('Last updated at'),
             ])
             ->actions([
-                Actions\Action::make('view')
-                    ->url(fn (Article $record): string => route('view-article', ['category' => $record->category->name, 'slug' => $record->slug]))
-                    ->openUrlInNewTab()
-                    ->color('gray'),
                 Actions\Action::make('edit')
                     ->url(fn (Article $record): string => route('admin.blog.edit', $record->slug))
                     ->color('warning'),
