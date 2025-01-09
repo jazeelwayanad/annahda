@@ -17,6 +17,7 @@ Route::get('/dashboard', function () {
     return redirect(route('app.dashboard'));
 })->middleware('auth')->name('dashboard');
 
+
 Route::get('article-list/{category}', [HomeController::class, 'getArticles'])->name('category.article');
 Route::get('article/{category}/{slug}', [App\BlogController::class, 'show'])->name('view-article');
 // auth routes
@@ -42,6 +43,9 @@ Route::name('admin.')->prefix('admin')->middleware([Middleware\AdminOnlyAccess::
         Route::get('dashboard', Admin\Dashboard::class)->name('dashboard');
 
         Route::get('popup', Admin\Popups::class)->name('popup');
+        Route::get('pages', Admin\Pages::class)->name('pages');
+        Route::get('coupon', Admin\CouponList::class)->name('coupon');
+
         // users
         Route::get('users', Admin\Users::class)->name('users')->middleware('can:manage users');
 
