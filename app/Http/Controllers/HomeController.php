@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function getArticles($category)
     {
         // echo $category;
-        $articles = Article::with(['category','author'])->where('status', 'published')->where('category_id', $category)->get();
+        $articles = Article::with(['category','author'])->where('status', 'published')->where('category_id', $category)->paginate(8);
         return view('article-list', [
             'articles' => $articles,
         ]);

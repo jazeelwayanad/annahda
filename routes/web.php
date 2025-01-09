@@ -45,7 +45,7 @@ Route::name('admin.')->prefix('admin')->middleware([Middleware\AdminOnlyAccess::
 
         Route::get('popup', Admin\Popups::class)->name('popup');
         Route::get('pages', Admin\Pages::class)->name('pages');
-        Route::get('coupon', Admin\CouponList::class)->name('coupon');
+        Route::get('coupon', Admin\Coupon::class)->name('coupon');
 
         // users
         Route::get('users', Admin\Users::class)->name('users')->middleware('can:manage users');
