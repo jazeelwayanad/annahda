@@ -26,4 +26,13 @@ class HomeController extends Controller
             return abort(500, $error->getMessage());
         }
     }
+
+    public function getArticles($category)
+    {
+        // echo $category;
+        $articles = Article::with(['category','author'])->where('status', 'published')->where('category_id', $category)->get();
+        return view('article-list', [
+            'articles' => $articles,
+        ]);
+    }
 }

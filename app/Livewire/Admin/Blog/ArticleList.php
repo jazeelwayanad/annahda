@@ -37,6 +37,10 @@ class ArticleList extends Component implements HasForms, HasTable
                 Columns\TextColumn::make('updated_at')->label('Last updated at'),
             ])
             ->actions([
+                Actions\Action::make('view')
+                    ->url(fn (Article $record): string => route('view-article', ['category' => $record->category->name, 'slug' => $record->slug]))
+                    ->openUrlInNewTab()
+                    ->color('gray'),
                 Actions\Action::make('approve')
                     ->action(function (Article $record) {
                         $record->update(['status' => 'published']); // Update the status to 'approved'
