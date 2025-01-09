@@ -74,14 +74,10 @@ class CouponList extends Component implements HasForms, HasTable
             Forms\Components\DatePicker::make('start_date')->required(),
             Forms\Components\DatePicker::make('end_date')->required()->afterOrEqual('start_date'),
 
-            Forms\Components\Select::make('status')
+            Forms\Components\Toggle::make('status')
                 ->required()
-                ->options([
-                    '1' => 'Enable',
-                    '0' => 'Disbale',
-                ]),
+                ->default(true),
             Forms\Components\TextInput::make('max_usage')->required(),
-            Forms\Components\TextInput::make('total_usage')->required(),
         ];
     }
 

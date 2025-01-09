@@ -20,6 +20,7 @@ Route::get('/dashboard', function () {
 
 Route::get('article-list/{category}', [HomeController::class, 'getArticles'])->name('category.article');
 Route::get('article/{category}/{slug}', [App\BlogController::class, 'show'])->name('view-article');
+Route::get('pages/{slug}', [HomeController::class, 'show_page'])->name('view-page');
 // auth routes
 Route::name('auth.')->group(function () {
     Route::middleware('guest')->group(function(){

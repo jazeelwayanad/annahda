@@ -39,6 +39,10 @@ class Pages extends Component implements HasForms, HasTable
                     ->form($this->formSchema())
             ])
             ->actions([
+                Actions\Action::make('view')
+                    ->url(fn (Page $record): string => route('view-page', ['slug' => $record->slug]))
+                    ->openUrlInNewTab()
+                    ->color('gray'),
                 Actions\EditAction::make()
                     ->form($this->formSchema())
                     ->mutateFormDataUsing(function (array $data, Page $record): array {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Popup;
+use App\Models\Page;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -34,5 +35,11 @@ class HomeController extends Controller
         return view('article-list', [
             'articles' => $articles,
         ]);
+    }
+
+    public function show_page(string $slug)
+    {
+        $page = Page::where('slug', $slug)->first();
+        return view('view-page', ['page' => $page]);
     }
 }
