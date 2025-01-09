@@ -11,6 +11,7 @@
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
+        "lucasdotvin/laravel-soulbscription": "^4.2",
         "spatie/laravel-permission": "^6.10",
         "taffovelikoff/imagekit-adapter": "^2.0"
     },
