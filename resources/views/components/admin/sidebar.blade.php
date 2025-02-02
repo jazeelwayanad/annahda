@@ -1,12 +1,12 @@
 <aside id="sidebar-multi-level-sidebar" class="fixed top-0 left-0 z-40 w-72 transition -translate-x-full lg:translate-x-0 delay-100 duration-500 ease-in-out" aria-label="Sidebar">
     <div class="w-full h-screen flex flex-col bg-white border-r-2 border-gray-200">
-        <div class="w-full" style="height: calc(100% - 12rem)">
+        <div class="w-full h-full">
             <div class="px-7 py-4 border-b-2 border-gray-200 flex items-center">
                 <img src="{{asset('assets/annahda-logo.svg')}}" alt="Interior Logo" class="h-8">
             </div>
         
             <div class="w-full h-full px-4 pt-6 overflow-y-auto">
-                <div class="w-full space-y-8 divide divide-gray-200">
+                <div class="w-full mb-8 space-y-8 divide divide-gray-200">
                     {{-- general --}}
                     <div class="w-full">
                         <p class="px-3 text-xs font-medium text-gray-400 tracking-wide uppercase">General</p>
