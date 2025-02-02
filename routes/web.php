@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/auth/login', fn()=> redirect('/login'))->name('login')->middleware('guest');
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('search', fn () => view('search'));
 
 Route::get('/dashboard', function () {
     if(auth()->user()->type == 'admin'){
@@ -21,6 +22,7 @@ Route::get('/dashboard', function () {
 Route::get('article-list/{category}', [HomeController::class, 'getArticles'])->name('category.article');
 Route::get('article/{category}/{slug}', [App\BlogController::class, 'show'])->name('view-article');
 Route::get('pages/{slug}', [HomeController::class, 'show_page'])->name('view-page');
+Route::post('newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');
 // auth routes
 Route::name('auth.')->group(function () {
     Route::middleware('guest')->group(function(){
@@ -46,6 +48,7 @@ Route::name('admin.')->prefix('admin')->middleware([Middleware\AdminOnlyAccess::
         Route::get('popup', Admin\Popups::class)->name('popup');
         Route::get('pages', Admin\Pages::class)->name('pages');
         Route::get('coupon', Admin\Coupon::class)->name('coupon');
+        Route::get('magazine', Admin\Magazine::class)->name('magazine');
 
         // users
         Route::get('users', Admin\Users::class)->name('users')->middleware('can:manage users');
