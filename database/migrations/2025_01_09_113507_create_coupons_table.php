@@ -15,13 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('code');
+            $table->json('plan_ids')->nullable();
             $table->enum('type', ['flat','percentage'])->default('flat');
             $table->decimal('discount', 10, 2);
             $table->date('start_date');
             $table->date('end_date');
             $table->boolean('status');
             $table->integer('max_usage');
-            $table->integer('total_usage');
+            $table->integer('total_usage')->default(0);
             $table->timestamps();
         });
     }

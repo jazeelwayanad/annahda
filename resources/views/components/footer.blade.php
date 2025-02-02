@@ -3,6 +3,39 @@
         <img src="{{asset('assets/annahdha-logo-white.png')}}" alt="" class="h-8 md:h-10 max-w-sm mx-auto">
     </div>
 
+    {{-- <div class="w-full max-w-xl mx-auto mt-6">
+        <div class="container mx-auto">
+            <div class="bg-neutral-900 p-8 shadow-lg text-center">
+                <h2 class="text-xl font-semibold mb-2 text-white">نشراتنا البريدية</h2>
+                <p class="text-sm text-white mb-4">اشترك في النشرة ليصلك كل جديد</p>
+                <form id="newsletterForm" method="POST" class="flex flex-col md:flex-row items-center justify-center gap-2">
+                    @csrf
+                    <button type="submit" 
+                        class="px-4 py-2 bg-primary-500 text-white rounded hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                        إشترك
+                    </button>
+                    <input type="email" name="newsletter_email" id="newsletter_email" placeholder="البريد الالكتروني" required 
+                        class="w-full md:w-auto p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500">
+                </form>
+                <div id="message" class="mt-2 text-sm text-white"></div>
+            </div>
+        </div>
+    </div> --}}
+
+    <div class="w-full max-w-2xl mx-auto mt-6 py-8 px-10 bg-neutral-900 text-center">
+        <h4 class="text-2xl font-bold text-white">نشراتنا البريدية</h4>
+        <p class="mt-1 text-base text-white">اشترك في النشرة ليصلك كل جديد</p>
+
+        <form id="newsletterForm" action="" method="POST" class="w-full mt-4 flex items-center">
+            @csrf
+            <button type="submit" class="shrink-0 z-10 inline-flex items-center py-2.5 px-6 text-base font-medium text-center text-white bg-primary-700 border hover:bg-primary-800 border-primary-700 hover:border-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300">إشترك</button>
+            <div class="relative w-full">
+                <input id="newsletter" name="email" type="email" aria-describedby="البريد الالكتروني" class="bg-transparent border border-gray-300 text-white text-base text-right placeholder:text-neutral-500 border-s-0 focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 focus:outline-none" placeholder="البريد الالكتروني" required />
+            </div>
+        </form>
+        <div id="message" class="mt-2 text-sm text-white"></div>
+    </div>
+    
     <div class="w-full mt-6 container mx-auto">
         {{-- social media links --}}
         <ul class="flex items-center justify-center gap-4">
@@ -42,8 +75,43 @@
         </nav>
     </div>
 
+    
+
     {{-- copyright --}}
     <div class="w-full mt-4 text-center text-white text-sm">
         Annahda.in | All rights reserved &copy; 2024
     </div>
+    
 </footer>
+<script>
+    document.getElementById('newsletterForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const emailInput = document.getElementById('newsletter');
+            const email = emailInput.value;
+            const token = document.querySelector('input[name="_token"]').value;
+
+            fetch('{{ route('newsletter.subscribe') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    },
+                    body: JSON.stringify({
+                        email: email
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const messageElement = document.getElementById('message');
+                    messageElement.textContent = data.message;
+                    if (data.success) {
+                        emailInput.value = ''; 
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('message').textContent =
+                        'Error connecting to server. Try again later.';
+                    console.error('Error:', error);
+                });
+        });
+    </script>

@@ -67,9 +67,13 @@
                         <p class="text-base line-clamp-4">{{$article->meta_description}}<p>
                     </div>
                 </div>
-                @endforeach
+                @endforeach                
+            </div>
+            <div class="mt-6">
+                {{ $articles->links() }}
             </div>
         </div>
+        
     </section>
     @endif
     

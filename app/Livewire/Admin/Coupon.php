@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin;
 
-use App\Models\Coupon;
+use App\Models\Coupon as CouponModel;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -14,8 +14,9 @@ use Filament\Tables\Table;
 use Filament\Tables\Actions;
 use Filament\Forms;
 use Illuminate\Support\Str;
+use LucasDotVin\Soulbscription\Models\Plan;
 
-class CouponList extends Component implements HasForms, HasTable
+class Coupon extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -23,7 +24,7 @@ class CouponList extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Coupon::query()) 
+            ->query(CouponModel::query()) 
             ->columns([
                 Columns\TextColumn::make('title'),
                 Columns\TextColumn::make('code'),
@@ -46,11 +47,20 @@ class CouponList extends Component implements HasForms, HasTable
             ->headerActions([
                 Actions\CreateAction::make()
                     ->form($this->formSchema())
+                    ->mutateFormDataUsing(function (array $data): array {
+                        $data['plan_ids'] = json_encode($data['plan_ids']);
+                        return $data;
+                    }),
             ])
             ->actions([
                 Actions\EditAction::make()
                     ->form($this->formSchema())
-                    ->mutateFormDataUsing(function (array $data, Coupon $record): array {
+                    ->mutateFormDataUsing(function (array $data, CouponModel $record): array {
+                        $data['plan_ids'] = json_encode($data['plan_ids']); 
+                        return $data;
+                    })
+                    ->mutateRecordDataUsing(function (array $data): array {
+                        $data['plan_ids'] = json_decode($data['plan_ids'], true);
                         return $data;
                     }),
                 Actions\DeleteAction::make(),
@@ -69,25 +79,26 @@ class CouponList extends Component implements HasForms, HasTable
                     'flat' => 'Flat',
                     'percentage' => 'Percentage',
                 ]),
+            Forms\Components\CheckboxList::make('plan_ids')
+                ->options(Plan::all()->mapWithKeys(function ($plan) {
+                    return [$plan->id => $plan->name];
+                })->toArray())
+                ->searchable(),
             Forms\Components\TextInput::make('discount')
                 ->required(),
             Forms\Components\DatePicker::make('start_date')->required(),
             Forms\Components\DatePicker::make('end_date')->required()->afterOrEqual('start_date'),
 
-            Forms\Components\Select::make('status')
+            Forms\Components\Toggle::make('status')
                 ->required()
-                ->options([
-                    '1' => 'Enable',
-                    '0' => 'Disbale',
-                ]),
+                ->default(true),
             Forms\Components\TextInput::make('max_usage')->required(),
-            Forms\Components\TextInput::make('total_usage')->required(),
         ];
     }
 
     #[Layout('layouts.admin')]
     public function render()
     {
-        return view('livewire.admin.coupon-list');
+        return view('livewire.admin.Coupon');
     }
 }
