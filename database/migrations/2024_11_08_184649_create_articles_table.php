@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('slug');
             $table->longText('content');
             $table->text('thumbnail');
-            $table->enum('status', ['draft','scheduled','published','reviewing'])->default('draft');
+            $table->enum('status', ['draft', 'scheduled', 'published', 'reviewing', 'requested', 'rejected'])->default('draft');
             $table->boolean('reviewed')->default(false);
             $table->boolean('comments')->default(true);
             $table->text('meta_title');

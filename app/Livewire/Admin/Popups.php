@@ -74,14 +74,8 @@ class Popups extends Component implements HasForms, HasTable
                 ->image()
                 ->required()
                 ->disk('imagekit')
-                ->directory('popups')
-                ->imageResizeMode('cover')
-                ->imageCropAspectRatio('1.91:1')
-                ->imageResizeTargetWidth('1200')
-                ->imageResizeTargetHeight('630')
-                ->helperText("Upload image with ratio 1.91:1 or width: 1200px and Height: 630px"),
-            Forms\Components\TextInput::make('redirect_url')->required(),
-
+                ->directory('popups'),
+            Forms\Components\TextInput::make('redirect_url'),
             Forms\Components\DatePicker::make('start_date')->required(),
             Forms\Components\DatePicker::make('end_date')->required()->afterOrEqual('start_date'),
 

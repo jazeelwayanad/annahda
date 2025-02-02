@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('popups', function (Blueprint $table) {
             $table->id();
             $table->text('image');
-            $table->text('redirect_url');
+            $table->text('redirect_url')->nullable();
             $table->date('start_date');
             $table->date('end_date');
             $table->boolean('status');

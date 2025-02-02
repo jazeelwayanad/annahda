@@ -14,28 +14,28 @@ class SubscriptionPlanSeeder extends Seeder
      */
     public function run(): void
     {
-        $annahda = Plan::create([
-            'name'             => 'annahda',
-            'periodicity_type' => PeriodicityType::Year,
-            'periodicity'      => 1,
-        ]);
+        // $annahda = Plan::create([
+        //     'name'             => 'annahda',
+        //     'periodicity_type' => PeriodicityType::Year,
+        //     'periodicity'      => 1,
+        // ]);
 
-        $annahda = Plan::create([
-            'name'             => 'annahda kids',
-            'periodicity_type' => PeriodicityType::Year,
-            'periodicity'      => 1,
-        ]);
+        // $annahda = Plan::create([
+        //     'name'             => 'annahda kids',
+        //     'periodicity_type' => PeriodicityType::Year,
+        //     'periodicity'      => 1,
+        // ]);
 
-        $annahda = Plan::create([
-            'name'             => 'annahda online',
-            'periodicity_type' => PeriodicityType::Year,
-            'periodicity'      => 1,
-        ]);
+        // $annahda = Plan::create([
+        //     'name'             => 'annahda online',
+        //     'periodicity_type' => PeriodicityType::Year,
+        //     'periodicity'      => 1,
+        // ]);
 
-        $annahda = Plan::create([
-            'name'             => 'combo',
-            'periodicity_type' => PeriodicityType::Year,
-            'periodicity'      => 1,
-        ]);
+        // $annahda = Plan::create([
+        //     'name'             => 'combo',
+        //     'periodicity_type' => PeriodicityType::Year,
+        //     'periodicity'      => 1,
+        // ]);
     }
 }
