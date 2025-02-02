@@ -12,8 +12,10 @@
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="w-full py-16">
-    <main class="w-full max-w-5xl mx-auto py-8 px-6 bg-white">
+<body class="w-full">
+    <x-header />
+
+    <main class="w-full py-16 h-[70dvh] flex flex-col justify-center items-center max-w-5xl mx-auto px-6 bg-white">
         <!-- search form -->
         <div class="w-full max-w-3xl mx-auto">
             <form class="w-full flex items-center gap-4">   
@@ -23,7 +25,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </button>
-                <input type="text" id="voice-search" class="bg-white border-b-2 border-gray-800 text-gray-900 text-lg text-center rounded-none focus:outline-none focus:border-primary-500 block w-full ps-10 p-2.5" placeholder="ابحث هنا" required />
+                <input type="text" id="voice-search" class="bg-white border-0 border-b-2 border-gray-800 text-gray-900 text-lg text-center rounded-none focus:outline-none focus:border-primary-500 block w-full ps-10 p-2.5 focus:ring-0" autofocus placeholder="ابحث هنا" required />
             </form>
         </div>
 
@@ -66,5 +68,7 @@
             </button>
         </div>
     </main>
+
+    <x-footer />
 </body>
 </html>

@@ -7,10 +7,23 @@ use App\Http\Middleware;
 use App\Http\Controllers\App;
 use App\Http\Controllers\HomeController;
 
-Route::get('/auth/login', fn()=> redirect('/login'))->name('login')->middleware('guest');
+/**
+ * Guest pages
+ */
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('search', fn () => view('search'));
+Route::get('/signin', function(){return redirect('login');})->name('login');
+Route::view('search', 'search')->name('search'); //search page
 
+Route::get('article-list/{category}', [HomeController::class, 'getArticles'])->name('category.article');
+Route::get('article/{category}/{slug}', [App\BlogController::class, 'show'])->name('view-article');
+Route::get('pages/{slug}', [HomeController::class, 'show_page'])->name('view-page');
+Route::post('newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');
+
+
+
+/**
+ * Auth routes
+ */
 Route::get('/dashboard', function () {
     if(auth()->user()->type == 'admin'){
         return redirect(route('admin.dashboard'));
@@ -18,12 +31,6 @@ Route::get('/dashboard', function () {
     return redirect(route('app.dashboard'));
 })->middleware('auth')->name('dashboard');
 
-
-Route::get('article-list/{category}', [HomeController::class, 'getArticles'])->name('category.article');
-Route::get('article/{category}/{slug}', [App\BlogController::class, 'show'])->name('view-article');
-Route::get('pages/{slug}', [HomeController::class, 'show_page'])->name('view-page');
-Route::post('newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');
-// auth routes
 Route::name('auth.')->group(function () {
     Route::middleware('guest')->group(function(){
         Route::view('register', 'auth.register')->name('register');
@@ -38,7 +45,9 @@ Route::name('auth.')->group(function () {
     });
 });
 
-// admin routes
+/**
+ * admin routes
+ */
 Route::name('admin.')->prefix('admin')->middleware([Middleware\AdminOnlyAccess::class])->group(function(){
     Route::get('/', fn () => redirect('admin/dashboard'));
     
@@ -73,6 +82,9 @@ Route::name('admin.')->prefix('admin')->middleware([Middleware\AdminOnlyAccess::
     });
 });
 
+/**
+ * App routes
+ */
 Route::name('app.')->prefix('app')->middleware([Middleware\UserOnlyAccess::class])->group(function(){
     Route::get('/', fn () => redirect('app/dashboard'));
     

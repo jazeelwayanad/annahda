@@ -28,7 +28,7 @@
 
         <form id="newsletterForm" action="" method="POST" class="w-full mt-4 flex items-center">
             @csrf
-            <button type="submit" class="shrink-0 z-10 inline-flex items-center py-2.5 px-6 text-base font-medium text-center text-white bg-primary-700 border hover:bg-primary-800 border-primary-700 hover:border-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300">إشترك</button>
+            <button type="submit" class="shrink-0 z-10 inline-flex items-center py-2.5 px-6 text-base font-medium text-center text-white bg-primary-500 border hover:bg-primary-600 border-primary-500 hover:border-primary-600 focus:ring-4 focus:outline-none focus:ring-primary-300">إشترك</button>
             <div class="relative w-full">
                 <input id="newsletter" name="email" type="email" aria-describedby="البريد الالكتروني" class="bg-transparent border border-gray-300 text-white text-base text-right placeholder:text-neutral-500 border-s-0 focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 focus:outline-none" placeholder="البريد الالكتروني" required />
             </div>

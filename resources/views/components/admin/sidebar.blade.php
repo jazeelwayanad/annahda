@@ -5,7 +5,7 @@
                 <img src="{{asset('assets/annahda-logo.svg')}}" alt="Interior Logo" class="h-8">
             </div>
         
-            <div class="w-full h-full px-4 pt-6 overflow-y-auto">
+            <div class="w-full h-[calc(100%-4rem)] px-4 pt-6 overflow-y-auto">
                 <div class="w-full mb-8 space-y-8 divide divide-gray-200">
                     {{-- general --}}
                     <div class="w-full">
@@ -30,37 +30,25 @@
                             @endcan
                             <li>
                                 <a href="{{ route('admin.popup') }}" class="w-full flex items-center px-3 py-2 text-gray-900 group rounded-lg {{ Route::current()->getName() == 'admin.popup' ? 'bg-zinc-100' : 'hover:bg-gray-100' }}">
-                                    <svg class="w-5 h-5 transition duration-75 {{ Route::current()->getName() == 'admin.popup' ? 'fill-primary-600' : 'fill-gray-500 group-hover:fill-gray-900' }}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-                                        <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
-                                        <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
-                                    </svg>
+                                    <svg class="w-5 h-5 transition duration-75 {{ Route::current()->getName() == 'admin.popup' ? 'fill-primary-600' : 'fill-gray-500 group-hover:fill-gray-900' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 18h2v4.081L11.101 18H16c1.103 0 2-.897 2-2V8c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2z"></path><path d="M20 2H8c-1.103 0-2 .897-2 2h12c1.103 0 2 .897 2 2v8c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"></path></svg>
                                     <span class="ms-4 text-base {{ Route::current()->getName() == 'admin.popup' ? 'text-primary-600 font-bold' : '' }}">Popups</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('admin.pages') }}" class="w-full flex items-center px-3 py-2 text-gray-900 group rounded-lg {{ Route::current()->getName() == 'admin.pages' ? 'bg-zinc-100' : 'hover:bg-gray-100' }}">
-                                    <svg class="w-5 h-5 transition duration-75 {{ Route::current()->getName() == 'admin.pages' ? 'fill-primary-600' : 'fill-gray-500 group-hover:fill-gray-900' }}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-                                        <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
-                                        <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
-                                    </svg>
+                                    <svg class="w-5 h-5 transition duration-75 {{ Route::current()->getName() == 'admin.pages' ? 'fill-primary-600' : 'fill-gray-500 group-hover:fill-gray-900' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 3H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14H5v-2h6v2zm8-4H5v-2h14v2zm0-4H5V7h14v2z"></path></svg>
                                     <span class="ms-4 text-base {{ Route::current()->getName() == 'admin.pages' ? 'text-primary-600 font-bold' : '' }}">Pages</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('admin.coupon') }}" class="w-full flex items-center px-3 py-2 text-gray-900 group rounded-lg {{ Route::current()->getName() == 'admin.coupon' ? 'bg-zinc-100' : 'hover:bg-gray-100' }}">
-                                    <svg class="w-5 h-5 transition duration-75 {{ Route::current()->getName() == 'admin.coupon' ? 'fill-primary-600' : 'fill-gray-500 group-hover:fill-gray-900' }}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-                                        <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
-                                        <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
-                                    </svg>
+                                    <svg class="w-5 h-5 transition duration-75 {{ Route::current()->getName() == 'admin.coupon' ? 'fill-primary-600' : 'fill-gray-500 group-hover:fill-gray-900' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 5H3a1 1 0 0 0-1 1v4h.893c.996 0 1.92.681 2.08 1.664A2.001 2.001 0 0 1 3 14H2v4a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-4h-1a2.001 2.001 0 0 1-1.973-2.336c.16-.983 1.084-1.664 2.08-1.664H22V6a1 1 0 0 0-1-1zM9 9a1 1 0 1 1 0 2 1 1 0 1 1 0-2zm-.8 6.4 6-8 1.6 1.2-6 8-1.6-1.2zM15 15a1 1 0 1 1 0-2 1 1 0 1 1 0 2z"></path></svg>
                                     <span class="ms-4 text-base {{ Route::current()->getName() == 'admin.coupon' ? 'text-primary-600 font-bold' : '' }}">Coupon</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('admin.magazine') }}" class="w-full flex items-center px-3 py-2 text-gray-900 group rounded-lg {{ Route::current()->getName() == 'admin.magazine' ? 'bg-zinc-100' : 'hover:bg-gray-100' }}">
-                                    <svg class="w-5 h-5 transition duration-75 {{ Route::current()->getName() == 'admin.magazine' ? 'fill-primary-600' : 'fill-gray-500 group-hover:fill-gray-900' }}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-                                        <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
-                                        <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
-                                    </svg>
+                                    <svg class="w-5 h-5 transition duration-75 {{ Route::current()->getName() == 'admin.magazine' ? 'fill-primary-600' : 'fill-gray-500 group-hover:fill-gray-900' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.012 18H21V4a2 2 0 0 0-2-2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.805 5 19s.55-.988 1.012-1zM8 6h9v2H8V6z"></path></svg>
                                     <span class="ms-4 text-base {{ Route::current()->getName() == 'admin.magazine' ? 'text-primary-600 font-bold' : '' }}">Magazine</span>
                                 </a>
                             </li>
