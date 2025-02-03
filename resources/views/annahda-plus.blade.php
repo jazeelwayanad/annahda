@@ -68,6 +68,122 @@
         </div>
     </main>
 
+    <section class="w-full py-8 bg-gray-100">
+        <div class="w-full p-8 max-w-6xl mx-auto text-right" dir="rtl">
+            <h2 class="text-3xl font-bold">وهنا ما تم تضمينه</h2>
+            <p class="text-base mt-4 font-normal">يتلقى الأعضاء رسائل إخبارية خاصة وشارة + وأولوية الوصول إلى الميزات الجديدة.
+            </p>
+            <p class="text-base mt-2 font-normal">ستكون أول من يحصل على المزايا التالية:</p>
+
+            <div class="w-full mt-6 relative overflow-x-auto">
+                <table class="w-full text-base text-right text-gray-700">
+                    <thead class="text-lg text-black uppercase bg-transparent">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                الفوائد
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                النهضة
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-primary-500">
+                                النهضة+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-transparent border border-gray-500">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap border border-gray-500">
+                                الوصول إلى أرشيف النهضة
+                            </td>
+                            <td class="px-6 py-4 border border-gray-500">
+                                <svg class="w-7 h-7 fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
+                            </td>
+                            <td class="px-6 py-4 border border-gray-500">
+                                <svg class="w-7 h-7 fill-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path></svg>
+                            </td>
+                        </tr>
+                        <tr class="bg-transparent border border-gray-500">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap border border-gray-500">
+                                شارة النهضة +
+                            </td>
+                            <td class="px-6 py-4 border border-gray-500">
+                                <svg class="w-7 h-7 fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
+                            </td>
+                            <td class="px-6 py-4 border border-gray-500">
+                                <svg class="w-7 h-7 fill-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path></svg>
+                            </td>
+                        </tr>
+                        <tr class="bg-transparent border border-gray-500">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap border border-gray-500">
+                                الوصول المبكر إلى الميزة الجديدة
+                            </td>
+                            <td class="px-6 py-4 border border-gray-500">
+                                <svg class="w-7 h-7 fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
+                            </td>
+                            <td class="px-6 py-4 border border-gray-500">
+                                <svg class="w-7 h-7 fill-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path></svg>
+                            </td>
+                        </tr>
+                        <tr class="bg-transparent border border-gray-500">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap border border-gray-500">
+                                اشترك في قنوات المبدعين المفضلين لديك
+                            </td>
+                            <td class="px-6 py-4 border border-gray-500">
+                                <svg class="w-7 h-7 fill-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path></svg>
+                            </td>
+                            <td class="px-6 py-4 border border-gray-500">
+                                <svg class="w-7 h-7 fill-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path></svg>
+                            </td>
+                        </tr>
+                        <tr class="bg-transparent border border-gray-500">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap border border-gray-500">
+                                يتلقى رسائل إخبارية خاصة
+                            </td>
+                            <td class="px-6 py-4 border border-gray-500">
+                                <svg class="w-7 h-7 fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
+                            </td>
+                            <td class="px-6 py-4 border border-gray-500">
+                                <svg class="w-7 h-7 fill-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path></svg>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="w-full mt-8 relative overflow-x-auto">
+                <table class="w-full text-base text-right text-gray-700">
+                    <thead class="text-lg text-black uppercase bg-transparent">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                الفوائد
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                النهضة
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-primary-500">
+                                النهضة+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-transparent border border-gray-500">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap border border-gray-500">
+                                الوصول إلى نسخة موقع النهضة للأطفال
+                            </td>
+                            <td class="px-6 py-4 border border-gray-500">
+                                <svg class="w-7 h-7 fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
+                            </td>
+                            <td class="px-6 py-4 border border-gray-500">
+                                <svg class="w-7 h-7 fill-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path></svg>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="mt-2 text-base">شكلت تعليقات المنشئ هذه الميزات بشكل كبير. إذا كنت ترغب في اقتراح ميزة جديدة، فيرجى الاتصال بنا.</p>
+            </div>
+        </div>
+    </section>
+
     <x-footer />
 </body>
 </html>

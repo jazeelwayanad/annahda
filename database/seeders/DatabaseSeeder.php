@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         $super_admin->assignRole('super-admin');
 
         Category::create([
-            'name' => fake()->name(),
+            'name' => fake('ar')->name(),
             'slug' => Str::slug(fake()->name()),
             'description' => fake()->paragraph(),
             'image' => "pages/thumbnails/01JH4X3E439SH01JASAR49XPAN.jpg?ik-sdk-version=php-2.0.0",
