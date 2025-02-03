@@ -19,6 +19,8 @@ Route::get('article/{category}/{slug}', [App\BlogController::class, 'show'])->na
 Route::get('pages/{slug}', [HomeController::class, 'show_page'])->name('view-page');
 Route::post('newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');
 
+Route::view('annahda-plus', 'annahda-plus')->name('annahda_plus');
+Route::view('subscribe-to-printed-magazine', 'printed-magazine')->name('printed_magazine');
 
 
 /**
