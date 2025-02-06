@@ -60,7 +60,7 @@ Route::name('admin.')->prefix('admin')->middleware([Middleware\AdminOnlyAccess::
         Route::get('pages', Admin\Pages::class)->name('pages');
         Route::get('coupon', Admin\Coupon::class)->name('coupon');
         Route::get('magazine', Admin\Magazine::class)->name('magazine');
-
+        Route::get('plan', Admin\Plans::class)->name('plan');
         // users
         Route::get('users', Admin\Users::class)->name('users')->middleware('can:manage users');
 
