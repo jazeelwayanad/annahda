@@ -26,6 +26,9 @@
                     </li>
                     @endforeach
                     @endisset
+                    <li>
+                        <a href="{{route('printed_magazine')}}" class="text-black hover:text-primary-500">مجلة مطبوعة</a>
+                    </li>
                 </ul>
             </nav>
 

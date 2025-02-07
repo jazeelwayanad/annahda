@@ -49,16 +49,18 @@ class AppServiceProvider extends ServiceProvider
 
 
         $categories = Models\Category::all();
+        $pages = Models\Page::all();
 
         if(count($categories)){
             view()->composer('components.header', function ($view) use ($categories) {
                 $view->with([
-                    'header_categories'           => $categories,
+                    'header_categories' => $categories,
                 ]);
             });
-            view()->composer('components.footer', function ($view) use ($categories) {
+            view()->composer('components.footer', function ($view) use ($categories, $pages) {
                 $view->with([
-                    'header_categories'           => $categories,
+                    'footer_categories' => $categories,
+                    'footer_pages' => $pages,
                 ]);
             });
         }
