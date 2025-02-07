@@ -7,9 +7,25 @@ use App\Http\Middleware;
 use App\Http\Controllers\App;
 use App\Http\Controllers\HomeController;
 
-Route::get('/auth/login', fn()=> redirect('/login'))->name('login')->middleware('guest');
+/**
+ * Guest pages
+ */
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/signin', function(){return redirect('login');})->name('login');
+Route::view('search', 'search')->name('search'); //search page
 
+Route::get('article-list/{category}', [HomeController::class, 'getArticles'])->name('category.article');
+Route::get('article/{category}/{slug}', [App\BlogController::class, 'show'])->name('view-article');
+Route::get('pages/{slug}', [HomeController::class, 'show_page'])->name('view-page');
+Route::post('newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');
+
+Route::view('annahda-plus', 'annahda-plus')->name('annahda_plus');
+Route::view('subscribe-to-printed-magazine', 'printed-magazine')->name('printed_magazine');
+
+
+/**
+ * Auth routes
+ */
 Route::get('/dashboard', function () {
     if(auth()->user()->type == 'admin'){
         return redirect(route('admin.dashboard'));
@@ -17,8 +33,6 @@ Route::get('/dashboard', function () {
     return redirect(route('app.dashboard'));
 })->middleware('auth')->name('dashboard');
 
-Route::get('article/{category}/{slug}', [App\BlogController::class, 'show'])->name('view-article');
-// auth routes
 Route::name('auth.')->group(function () {
     Route::middleware('guest')->group(function(){
         Route::view('register', 'auth.register')->name('register');
@@ -33,7 +47,9 @@ Route::name('auth.')->group(function () {
     });
 });
 
-// admin routes
+/**
+ * admin routes
+ */
 Route::name('admin.')->prefix('admin')->middleware([Middleware\AdminOnlyAccess::class])->group(function(){
     Route::get('/', fn () => redirect('admin/dashboard'));
     
@@ -41,6 +57,10 @@ Route::name('admin.')->prefix('admin')->middleware([Middleware\AdminOnlyAccess::
         Route::get('dashboard', Admin\Dashboard::class)->name('dashboard');
 
         Route::get('popup', Admin\Popups::class)->name('popup');
+        Route::get('pages', Admin\Pages::class)->name('pages');
+        Route::get('coupon', Admin\Coupon::class)->name('coupon');
+        Route::get('magazine', Admin\Magazine::class)->name('magazine');
+        Route::get('plan', Admin\Plans::class)->name('plan');
         // users
         Route::get('users', Admin\Users::class)->name('users')->middleware('can:manage users');
 
@@ -64,6 +84,9 @@ Route::name('admin.')->prefix('admin')->middleware([Middleware\AdminOnlyAccess::
     });
 });
 
+/**
+ * App routes
+ */
 Route::name('app.')->prefix('app')->middleware([Middleware\UserOnlyAccess::class])->group(function(){
     Route::get('/', fn () => redirect('app/dashboard'));
     

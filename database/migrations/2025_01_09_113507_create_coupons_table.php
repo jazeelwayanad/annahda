@@ -11,13 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('popups', function (Blueprint $table) {
+        Schema::create('coupons', function (Blueprint $table) {
             $table->id();
-            $table->text('image');
-            $table->text('redirect_url')->nullable();
+            $table->string('title');
+            $table->string('code');
+            $table->json('plan_ids')->nullable();
+            $table->enum('type', ['flat','percentage'])->default('flat');
+            $table->decimal('discount', 10, 2);
             $table->date('start_date');
             $table->date('end_date');
             $table->boolean('status');
+            $table->integer('max_usage');
+            $table->integer('total_usage')->default(0);
             $table->timestamps();
         });
     }
@@ -27,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('popups');
+        Schema::dropIfExists('coupons');
     }
 };

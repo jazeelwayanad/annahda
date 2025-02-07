@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('popups', function (Blueprint $table) {
+        Schema::create('magazines', function (Blueprint $table) {
             $table->id();
-            $table->text('image');
-            $table->text('redirect_url')->nullable();
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->boolean('status');
+            $table->year('year');
+            $table->string('start_month');
+            $table->string('end_month');
+            $table->text('cover_image');
+            $table->json('article_ids')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('popups');
+        Schema::dropIfExists('magazines');
     }
 };

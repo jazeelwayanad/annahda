@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('popups', function (Blueprint $table) {
+        Schema::create('bills', function (Blueprint $table) {
             $table->id();
-            $table->text('image');
-            $table->text('redirect_url')->nullable();
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->boolean('status');
+            $table->foreignId('subscription_id')->constrained()->noActionOnDelete();
+            $table->decimal('payment_amount', 10, 2);
+            $table->decimal('tax', 10, 2);
+            $table->date('payment_date');
+            $table->string('invoice_number');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('popups');
+        Schema::dropIfExists('bills');
     }
 };

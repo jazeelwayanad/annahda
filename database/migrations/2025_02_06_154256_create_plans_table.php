@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('articles', function (Blueprint $table) {
-            $table->enum('status', ['draft', 'scheduled', 'published', 'reviewing', 'requested'])->default('draft')->change();
+        Schema::create('plans', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->decimal('price', 10, 2);
+            $table->decimal('sale_price', 10, 2);
+            $table->decimal('discount_percentage', 10, 2);
+            $table->timestamps();
         });
-        
     }
 
     /**
@@ -22,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('articles', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('plans');
     }
 };
