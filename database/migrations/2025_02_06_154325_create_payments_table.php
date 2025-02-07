@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->noActionOnDelete();
             $table->decimal('amount', 10, 2);
             $table->foreignId('plan_id')->constrained()->noActionOnDelete();
-            $table->string('order_id');
-            $table->string('payment_id');
-            $table->string('signature');
-            $table->string('status')->nullable();
+            $table->string('order_id')->nullable();
+            $table->string('payment_id')->nullable();
+            $table->string('signature')->nullable();
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
