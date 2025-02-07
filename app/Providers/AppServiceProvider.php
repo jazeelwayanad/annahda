@@ -48,19 +48,19 @@ class AppServiceProvider extends ServiceProvider
         });
 
 
-        $categories = Models\Category::all();
+        // $categories = Models\Category::all();
 
-        if(count($categories)){
-            view()->composer('components.header', function ($view) use ($categories) {
-                $view->with([
-                    'header_categories'           => $categories,
-                ]);
-            });
-            view()->composer('components.footer', function ($view) use ($categories) {
-                $view->with([
-                    'header_categories'           => $categories,
-                ]);
-            });
-        }
+        // if(count($categories)){
+        //     view()->composer('components.header', function ($view) use ($categories) {
+        //         $view->with([
+        //             'header_categories'           => $categories,
+        //         ]);
+        //     });
+        //     view()->composer('components.footer', function ($view) use ($categories) {
+        //         $view->with([
+        //             'header_categories'           => $categories,
+        //         ]);
+        //     });
+        // }
     }
 }

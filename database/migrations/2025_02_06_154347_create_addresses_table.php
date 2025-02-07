@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->noActionOnDelete();
-            $table->foreignId('plan_id')->constrained()->noActionOnDelete();
-            $table->string('plan_type');
-            $table->integer('count');
-            $table->date('start_date');
-            $table->date('expiry_date');
-            $table->decimal('amount', 10, 2);
-            $table->string('status');
+            $table->string('name');
+            $table->string('email');
+            $table->string('country');
+            $table->string('phone_number');
+            $table->text('address');
+            $table->string('city');
+            $table->string('state');
+            $table->string('pincode');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('addresses');
     }
 };
