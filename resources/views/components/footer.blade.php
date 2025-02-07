@@ -61,16 +61,30 @@
     </div>
 
     {{-- links --}}
-    <div class="w-full mt-6 p-4 bg-neutral-900 flex justify-center">
-        <nav class="w-full max-w-lg inline-flex justify-center">
-            <ul dir="rtl" class="w-fit flex flex-col md:flex-row text-center md:text-right items-center justify-center gap-y-2 gap-x-6 font-semibold text-base">
-                @isset($header_categories)
-                @foreach ($header_categories as $item)
+    <div class="w-full mt-6 p-4 bg-neutral-900 flex flex-col justify-center items-center">
+        <div class="w-full container inline-flex justify-center">
+            <ul dir="rtl" class="w-fit flex flex-col md:flex-row text-center md:text-right items-center justify-center gap-y-2 gap-x-6 font-bold text-base">
+                @isset($footer_categories)
+                @foreach ($footer_categories as $item)
                 <li>
                     <a href="#" class="text-white hover:text-primary-500 dark:text-white">{{$item->name}}</a>
                 </li>
                 @endforeach
                 @endisset
+            </ul>
+        </div>
+        <nav class="w-full mt-4 container inline-flex justify-center">
+            <ul dir="rtl" class="w-fit flex flex-col md:flex-row text-center md:text-right items-center justify-center gap-y-2 gap-x-6 font-light text-base">
+                @isset($footer_pages)
+                @foreach ($footer_pages as $item)
+                <li>
+                    <a href="{{route('view-page', $item->slug)}}" class="text-white hover:text-primary-500 dark:text-white">{{$item->title}}</a>
+                </li>
+                @endforeach
+                @endisset
+                <li>
+                    <a href="{{route('printed_magazine')}}" class="text-white hover:text-primary-500 dark:text-white">مجلة مطبوعة</a>
+                </li>
             </ul>
         </nav>
     </div>
