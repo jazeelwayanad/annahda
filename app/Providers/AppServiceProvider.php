@@ -47,7 +47,6 @@ class AppServiceProvider extends ServiceProvider
             return $user->hasAnyRole(['super-admin','developer']) ? true : null;
         });
 
-
         $categories = Models\Category::all();
         $pages = Models\Page::all();
 

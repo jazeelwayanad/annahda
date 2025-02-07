@@ -14,7 +14,6 @@ use Filament\Tables\Table;
 use Filament\Tables\Actions;
 use Filament\Forms;
 use Illuminate\Support\Str;
-use LucasDotVin\Soulbscription\Models\Plan;
 
 class Coupon extends Component implements HasForms, HasTable
 {
@@ -44,14 +43,14 @@ class Coupon extends Component implements HasForms, HasTable
                 Columns\TextColumn::make('max_usage'),
                 Columns\TextColumn::make('total_usage'),
             ])
-            ->headerActions([
-                Actions\CreateAction::make()
-                    ->form($this->formSchema())
-                    ->mutateFormDataUsing(function (array $data): array {
-                        $data['plan_ids'] = json_encode($data['plan_ids']);
-                        return $data;
-                    }),
-            ])
+            // ->headerActions([
+            //     Actions\CreateAction::make()
+            //         ->form($this->formSchema())
+            //         ->mutateFormDataUsing(function (array $data): array {
+            //             $data['plan_ids'] = json_encode($data['plan_ids']);
+            //             return $data;
+            //         }),
+            // ])
             ->actions([
                 Actions\EditAction::make()
                     ->form($this->formSchema())
@@ -79,11 +78,11 @@ class Coupon extends Component implements HasForms, HasTable
                     'flat' => 'Flat',
                     'percentage' => 'Percentage',
                 ]),
-            Forms\Components\CheckboxList::make('plan_ids')
-                ->options(Plan::all()->mapWithKeys(function ($plan) {
-                    return [$plan->id => $plan->name];
-                })->toArray())
-                ->searchable(),
+            // Forms\Components\CheckboxList::make('plan_ids')
+            //     ->options(Plan::all()->mapWithKeys(function ($plan) {
+            //         return [$plan->id => $plan->name];
+            //     })->toArray())
+            //     ->searchable(),
             Forms\Components\TextInput::make('discount')
                 ->required(),
             Forms\Components\DatePicker::make('start_date')->required(),
