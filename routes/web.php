@@ -6,6 +6,7 @@ use App\Livewire\Admin;
 use App\Http\Middleware;
 use App\Http\Controllers\App;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CheckoutController;
 
 /**
  * Guest pages
@@ -21,6 +22,7 @@ Route::post('newsletter/subscribe', [HomeController::class, 'subscribe'])->name(
 
 Route::view('annahda-plus', 'annahda-plus')->name('annahda_plus');
 Route::view('subscribe-to-printed-magazine', 'printed-magazine')->name('printed_magazine');
+Route::post('checkout', [CheckoutController::class, 'process'])->name('checkout');
 
 
 /**
