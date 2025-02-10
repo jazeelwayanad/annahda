@@ -45,8 +45,11 @@
                                 يتلقى رسائل إخبارية خاصة
                             </li>
                         </ul>
-
-                        <button class="w-full mt-4 text-white bg-primary-600 hover:bg-primary-700 focus:bg-primary-800 font-medium text-center text-xl px-5 py-2.5 focus:outline-none cursor-pointer">ترقية مقابل 150₹ شهريًا</button>
+                        <form action="{{ route('checkout') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="plan_id" value="1">
+                            <button class="w-full mt-4 text-white bg-primary-600 hover:bg-primary-700 focus:bg-primary-800 font-medium text-center text-xl px-5 py-2.5 focus:outline-none cursor-pointer">ترقية مقابل 150₹ شهريًا</button>
+                        </form>
                         <p class="text-sm mt-2 text-gray-700">استمتع بسنتك الأولى لمدة 150₹ فقط. يجدد في 300₹. ألغي في أي وقت. من خلال الاشتراك، فإنك توافق على شروط الاستخدام الخاصة بنا. سيتم تحصيل رسوم متكررة من طريقة الدفع الخاصة بك، ما لم تقرر الإلغاء. لم يتم إلغاء أي مبالغ مستردة للعضوية بين دورات الفوترة.</p>
                     </div>  
                     @else
