@@ -232,20 +232,27 @@
     </script>
     <script>
         document.addEventListener( 'DOMContentLoaded', function() {
-            new Splide('#hero-carousel').mount();
-            new Splide('#popular-carousel', {
-                direction: 'rtl',
-                rewind    : true,
-                perPage: 3,
-                perMove: 1,
-                gap: 15,
-                fixedHeight: 400,
-                breakpoints: {
-                    640: {
-                        perPage: 1,
+            var homeCarousel = document.getElementById("hero-carousel");
+            if(homeCarousel){
+                new Splide('#hero-carousel').mount();
+            }
+
+            const popularCarousel =  document.getElementById("popular-carousel");
+            if(popularCarousel){
+                new Splide('#popular-carousel', {
+                    direction: 'rtl',
+                    rewind    : true,
+                    perPage: 3,
+                    perMove: 1,
+                    gap: 15,
+                    fixedHeight: 400,
+                    breakpoints: {
+                        640: {
+                            perPage: 1,
+                        },
                     },
-                },
-            }).mount();
+                }).mount();
+            }
         });
     </script>
 </body>
