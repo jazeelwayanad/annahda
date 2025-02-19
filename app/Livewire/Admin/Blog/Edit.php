@@ -113,6 +113,8 @@ class Edit extends Component implements HasForms
                         Forms\Components\Toggle::make('comments')
                             ->required()
                             ->default(true),
+                        Forms\Components\Toggle::make('premium')
+                            ->required(),
                     ]),
                 ])->columnSpan(['lg' => 1]),
             ])

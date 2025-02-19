@@ -38,6 +38,7 @@ class BlogController extends Controller
     public function show(string $category, string $slug)
     {
         $article = Article::with(['category','tags','author'])->where('slug', $slug)->first();
+        $article->increment('views');
         return view('view-article', ['article' => $article]);
     }
 

@@ -26,6 +26,8 @@ return new class extends Migration
             $table->text('meta_description');
             $table->text('og_title')->nullable();
             $table->text('og_description')->nullable();
+            $table->boolean('premium')->default(false);
+            $table->integer('views')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

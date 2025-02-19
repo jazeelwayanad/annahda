@@ -316,14 +316,6 @@
               </div>
             </div>
           </div>
-  
-          <div>
-            <label for="voucher" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Enter a gift card, voucher or promotional code </label>
-            <div class="flex max-w-md items-center gap-4">
-              <input type="text" id="voucher" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="" required />
-              <button type="button" class="flex items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Apply</button>
-            </div>
-          </div>
         </div>
   
         <div class="mt-6 w-full space-y-6 sm:mt-8 lg:mt-0 lg:max-w-xs xl:max-w-md">
@@ -345,11 +337,6 @@
               </dl>
   
               {{-- <dl class="flex items-center justify-between gap-4 py-3">
-                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Store Pickup</dt>
-                <dd class="text-base font-medium text-gray-900 dark:text-white">$99</dd>
-              </dl> --}}
-  
-              {{-- <dl class="flex items-center justify-between gap-4 py-3">
                 <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Tax</dt>
                 <dd class="text-base font-medium text-gray-900 dark:text-white">$199</dd>
               </dl> --}}
@@ -359,12 +346,18 @@
                 <dd class="text-base font-bold text-gray-900 dark:text-white">INR {{ $plan->sale_price }}</dd>
               </dl>
             </div>
+
+            <div class="mt-8">
+              <label for="voucher" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Enter a gift card, voucher or promotional code </label>
+              <div class="flex max-w-md items-center gap-4">
+                <input type="text" id="voucher" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Enter promocode" required />
+                <button type="button" class="flex items-center justify-center rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">Apply</button>
+              </div>
+            </div>
           </div>
   
           <div class="space-y-3">
-            <button type="submit" class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Proceed to Payment</button>
-  
-            <p class="text-sm font-normal text-gray-500 dark:text-gray-400">One or more items in your cart require an account. <a href="#" title="" class="font-medium text-primary-700 underline hover:no-underline dark:text-primary-500">Sign in or create an account now.</a>.</p>
+            <button type="submit" class="flex w-full items-center justify-center rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300">Proceed to Payment</button>
           </div>
         </div>
       </div>

@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Magazine;
 use App\Models\Popup;
 use App\Models\Page;
 use App\Models\NewsletterSubscriber;
+use App\Models\Slide;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class HomeController extends Controller
 {
@@ -16,13 +19,33 @@ class HomeController extends Controller
     {
         try {
             $categories = Category::all();
-            $articles = Article::with(['category', 'author'])->where('status', 'published')->get();
+            // articles
+            $articles = Article::with(['category', 'author'])->published()->get();
+            $latest_articles = Article::with(['category', 'author'])->published()->latest()->limit(4)->get();
+            $premium_articles = Article::with(['category', 'author'])->published()->premium()->latest()->limit(3)->get();
+            $popular_articles = Article::with(['category', 'author'])->published()->orderBy('views', 'DESC')->limit(6)->get();
+
+            // popup
             $currentDate = Carbon::now()->toDateString();
             $popups = Popup::where('start_date', '<=', $currentDate)->where('end_date', '>=', $currentDate)->where('status', 1)->first();
+
+            // magazine
+            $magazine = Magazine::with(['articles' => function (Builder $query) {
+                $query->published();
+            }])->latest()->first();
+
+            // slider
+            $slides = Slide::with('article')->where('status', true)->get();
+
             return view('welcome', [
                 'categories' => $categories,
                 'articles' => $articles,
                 'popups' => $popups,
+                'magazine' => $magazine,
+                'slides' => $slides,
+                'latest_articles' => $latest_articles,
+                'premium_articles' => $premium_articles,
+                'popular_articles' => $popular_articles,
             ]);
         } catch (\Exception $error) {
             return abort(500, $error->getMessage());
@@ -32,7 +55,7 @@ class HomeController extends Controller
     public function getArticles($category)
     {
         // echo $category;
-        $articles = Article::with(['category', 'author'])->where('status', 'published')->where('category_id', $category)->paginate(8);
+        $articles = Article::with(['category', 'author'])->published()->where('category_id', $category)->paginate(8);
         return view('article-list', [
             'articles' => $articles,
         ]);
