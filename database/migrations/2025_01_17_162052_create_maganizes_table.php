@@ -20,6 +20,10 @@ return new class extends Migration
             $table->json('article_ids')->nullable();
             $table->timestamps();
         });
+
+        Schema::table('articles', function (Blueprint $table) {
+            $table->foreignId('magazine_id')->nullable()->constrained('magazines')->noActionOnDelete();
+        });
     }
 
     /**

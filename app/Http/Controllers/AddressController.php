@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\App;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Article;
 use Illuminate\Http\Request;
+use App\Models\Address;
 
-class BlogController extends Controller
+class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('app.blog.create');
+        //
     }
 
     /**
@@ -35,11 +35,9 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $category, string $slug)
+    public function show(string $id)
     {
-        $article = Article::with(['category','tags','author'])->where('slug', $slug)->first();
-        $article->increment('views');
-        return view('view-article', ['article' => $article]);
+        //
     }
 
     /**
@@ -47,7 +45,7 @@ class BlogController extends Controller
      */
     public function edit(string $id)
     {
-        return view('app.blog.edit');
+        //
     }
 
     /**

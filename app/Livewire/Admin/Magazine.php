@@ -27,9 +27,11 @@ class Magazine extends Component implements HasForms, HasTable
         return $table
             ->query(MagazineModel::query()) 
             ->columns([
-                Columns\TextColumn::make('year'),
                 Columns\ImageColumn::make('cover_image')
                     ->disk('imagekit'),
+                Columns\TextColumn::make('year'),
+                Columns\TextColumn::make('start_month'),
+                Columns\TextColumn::make('end_month'),
             ])
             ->headerActions([
                 Actions\CreateAction::make()
@@ -41,7 +43,7 @@ class Magazine extends Component implements HasForms, HasTable
             ])
             ->actions([
                 Actions\EditAction::make()
-                    ->form($this->formSchema())
+                    ->form(fn ($record) => $this->formSchema($record))
                     ->mutateFormDataUsing(function (array $data, MagazineModel $record): array {
                         $data['article_ids'] = json_encode($data['article_ids']); 
                         return $data;
@@ -49,12 +51,18 @@ class Magazine extends Component implements HasForms, HasTable
                     ->mutateRecordDataUsing(function (array $data): array {
                         $data['article_ids'] = json_decode($data['article_ids'], true);
                         return $data;
+                    })
+                    ->after(function (MagazineModel $record) {
+                        foreach(json_decode($record->article_ids) as $artcle){
+                            $article = Article::find($artcle);
+                            $article->update(['magazine_id'=>$record->id]);
+                        }
                     }),
                 Actions\DeleteAction::make(),
             ]);
     }
 
-    protected function formSchema(): array
+    protected function formSchema($record = null): array
     {
         $months = array_combine(range(1, 12), array_map(fn($month) => date('F', mktime(0, 0, 0, $month, 10)), range(1, 12)));
         return [         
@@ -65,6 +73,7 @@ class Magazine extends Component implements HasForms, HasTable
                 ))
                 ->label('Select Year')
                 ->required()
+                ->unique(ignorable: $record)
                 ->searchable(),
             Forms\Components\Select::make('start_month')
                 ->options($months)
@@ -93,12 +102,13 @@ class Magazine extends Component implements HasForms, HasTable
                     ->disk('imagekit')
                     ->directory('magazine/covers')
                     ->imageResizeMode('cover')
-                    ->imageCropAspectRatio('1.91:1')
-                    ->imageResizeTargetWidth('1200')
-                    ->imageResizeTargetHeight('630')
-                    ->helperText("Upload image with ratio 1.91:1 or width: 1200px and Height: 630px"),
+                    ->imageCropAspectRatio('500:658')
+                    // ->imageResizeTargetWidth('500')
+                    // ->imageResizeTargetHeight('630')
+                    ->helperText("Upload image with ratio 500:658 or width: 500px and Height: 658px"),
             ])->description('Magazine cover image'),
-            Forms\Components\CheckboxList::make('article_ids')
+            Forms\Components\Select::make('article_ids')
+                ->multiple()
                 ->options(Article::all()->mapWithKeys(function ($article) {
                     return [$article->id => $article->title];
                 })->toArray())

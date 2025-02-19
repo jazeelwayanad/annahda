@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,12 +27,26 @@ class Article extends Model
         'meta_description',
         'og_title',
         'og_description',
+        'magazine_id',
+        'premium',
+        'views',
     ];
 
     protected $casts = [
         'reviewed' => 'boolean',
         'comments' => 'boolean',
+        'premium' => 'boolean',
     ];
+
+    public function scopePublished(Builder $query): void
+    {
+        $query->where('status', '=',  'published');
+    }
+
+    public function scopePremium(Builder $query): void
+    {
+        $query->where('premium', '=',  true);
+    }
 
     public function author(): BelongsTo
     {
@@ -40,6 +55,10 @@ class Article extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+    public function magazine(): BelongsTo
+    {
+        return $this->belongsTo(Magazine::class);
     }
     public function tags(): BelongsToMany
     {

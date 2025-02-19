@@ -29,6 +29,12 @@
                             </li>
                             @endcan
                             <li>
+                                <a href="{{ route('admin.slides') }}" class="w-full flex items-center px-3 py-2 text-gray-900 group rounded-lg {{ Route::current()->getName() == 'admin.slides' ? 'bg-zinc-100' : 'hover:bg-gray-100' }}">
+                                    <svg class="w-5 h-5 transition duration-75 {{ Route::current()->getName() == 'admin.slides' ? 'fill-primary-600' : 'fill-gray-500 group-hover:fill-gray-900' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.999 4h-16c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm-13.5 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5.5 10h-7l4-5 1.5 2 3-4 5.5 7h-7z"></path></svg>
+                                    <span class="ms-4 text-base {{ Route::current()->getName() == 'admin.slides' ? 'text-primary-600 font-bold' : '' }}">Slides</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="{{ route('admin.popup') }}" class="w-full flex items-center px-3 py-2 text-gray-900 group rounded-lg {{ Route::current()->getName() == 'admin.popup' ? 'bg-zinc-100' : 'hover:bg-gray-100' }}">
                                     <svg class="w-5 h-5 transition duration-75 {{ Route::current()->getName() == 'admin.popup' ? 'fill-primary-600' : 'fill-gray-500 group-hover:fill-gray-900' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 18h2v4.081L11.101 18H16c1.103 0 2-.897 2-2V8c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2z"></path><path d="M20 2H8c-1.103 0-2 .897-2 2h12c1.103 0 2 .897 2 2v8c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"></path></svg>
                                     <span class="ms-4 text-base {{ Route::current()->getName() == 'admin.popup' ? 'text-primary-600 font-bold' : '' }}">Popups</span>
@@ -53,7 +59,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.plan') }}" class="w-full flex items-center px-3 py-2 text-gray-900 group rounded-lg {{ Route::current()->getName() == 'admin.magazine' ? 'bg-zinc-100' : 'hover:bg-gray-100' }}">
+                                <a href="{{ route('admin.plan') }}" class="w-full flex items-center px-3 py-2 text-gray-900 group rounded-lg {{ Route::current()->getName() == 'admin.plan' ? 'bg-zinc-100' : 'hover:bg-gray-100' }}">
                                     <svg class="w-5 h-5 transition duration-75 {{ Route::current()->getName() == 'admin.plan' ? 'fill-primary-600' : 'fill-gray-500 group-hover:fill-gray-900' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 3H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-9 14H5v-2h6v2zm8-4H5v-2h14v2zm0-4H5V7h14v2z"></path></svg>
                                     <span class="ms-4 text-base {{ Route::current()->getName() == 'admin.plan' ? 'text-primary-600 font-bold' : '' }}">Plans</span>
                                 </a>
