@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin;
 use App\Http\Middleware;
 use App\Http\Controllers\App;
+use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CheckoutController;
 
@@ -15,9 +17,13 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/signin', function(){return redirect('login');})->name('login');
 Route::view('search', 'search')->name('search'); //search page
 
-Route::get('article-list/{category}', [HomeController::class, 'getArticles'])->name('category.article');
-Route::get('article/{category}/{slug}', [App\BlogController::class, 'show'])->name('view-article');
+Route::get('articles/{slug}', [BlogController::class, 'category'])->name('category.articles');
+Route::get('articles/{category}/{slug}', [BlogController::class, 'article'])->name('article.show');
 Route::get('pages/{slug}', [HomeController::class, 'show_page'])->name('view-page');
+// archive
+Route::get('magazine-archive', [ArchiveController::class, 'index'])->name('archive.index');
+Route::get('magazine-archive/{year}/{start}-{end}', [ArchiveController::class, 'show'])->name('archive.show');
+
 Route::post('newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');
 
 Route::view('annahda-plus', 'annahda-plus')->name('annahda_plus');

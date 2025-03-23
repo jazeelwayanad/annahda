@@ -39,7 +39,7 @@ class ListArticles extends Component implements HasForms, HasTable
             ])
             ->actions([
                 Actions\Action::make('view')
-                    ->url(fn (Article $record): string => route('view-article', ['category' => $record->category->name, 'slug' => $record->slug]))
+                    ->url(fn (Article $record): string => route('article.show', ['category' => $record->category->name, 'slug' => $record->slug]))
                     ->openUrlInNewTab()
                     ->color('gray'),
                 Actions\Action::make('edit')

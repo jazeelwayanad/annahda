@@ -79,7 +79,7 @@ class Magazine extends Component implements HasForms, HasTable
                 ))
                 ->label('Select Year')
                 ->required()
-                ->unique(ignorable: $record)
+                // ->unique(ignorable: $record)
                 ->searchable(),
             Forms\Components\Select::make('start_month')
                 ->options($months)

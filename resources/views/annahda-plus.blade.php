@@ -18,7 +18,7 @@
         <div class="w-full p-8 container mx-auto">
             <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                 <div class="w-full max-w-md text-right">
-                    @if (auth()->check())
+                    @auth
                     <div class="w-full p-6 border border-gray-300 bg-gray-50">
                         <h2 class="text-3xl font-bold" dir="rtl">الترقية إلى <span class="text-primary-500">النهضة+</span></h2>
                         <p class="text-base mt-4 font-medium">كعضو في النهضة+ تحصل على ما يلي:</p>
@@ -52,15 +52,16 @@
                         </form>
                         <p class="text-sm mt-2 text-gray-700">استمتع بسنتك الأولى لمدة 150₹ فقط. يجدد في 300₹. ألغي في أي وقت. من خلال الاشتراك، فإنك توافق على شروط الاستخدام الخاصة بنا. سيتم تحصيل رسوم متكررة من طريقة الدفع الخاصة بك، ما لم تقرر الإلغاء. لم يتم إلغاء أي مبالغ مستردة للعضوية بين دورات الفوترة.</p>
                     </div>  
-                    @else
+                    @endauth
+                    @guest
                     <div class="w-full p-6 border border-gray-300 bg-gray-50">
                         <h2 class="text-2xl font-bold">أولاً، انضم إلى النهضة</h2>
                         <p class="text-base mt-2 font-medium text-gray-900">للترقية <span class="text-primary-500">النهضة+</span>، يجب أن يكون لديك حساب. انضم أو قم بتسجيل الدخول للمتابعة.</p>
 
-                        <button class="w-full mt-4 text-white bg-black hover:bg-white hover:text-black focus:bg-black focus:text-white border border-black font-medium  text-center text-base px-5 py-2.5 focus:outline-none cursor-pointer">انضم إلى النهضة</button>
-                        <p class="mt-2 text-gray-800">هل لديك حساب النهضة؟ <a href="{{route('auth.register')}}" class="font-bold text-black">تسجيل</a></p>
+                        <a href="{{ route('auth.login', ['redirect' => 'annahda-plus']) }}"><button class="w-full mt-4 text-white bg-black hover:bg-white hover:text-black focus:bg-black focus:text-white border border-black font-medium  text-center text-base px-5 py-2.5 focus:outline-none cursor-pointer">انضم إلى النهضة</button></a>
+                        <p class="mt-2 text-gray-800">هل لديك حساب النهضة؟ <a href="{{route('auth.register', ['redirect' => 'annahda-plus'])}}" class="font-bold text-black">تسجيل</a></p>
                     </div>
-                    @endif
+                    @endguest
                 </div>
 
                 <div class="w-full flex-1 text-right" dir="rtl">
