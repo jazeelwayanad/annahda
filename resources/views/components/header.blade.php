@@ -8,8 +8,13 @@
 
         <div class="w-full mt-6 px-4 pb-4 flex items-center justify-between gap-6 border-b border-black">
             <div class="w-fit flex items-center gap-4">
-                <a href="{{route('auth.login')}}" class="hidden md:block text-white bg-black hover:bg-white hover:text-black focus:bg-black focus:text-white border border-black font-medium text-sm px-5 py-1 focus:outline-none cursor-pointer">إنشاء </a>
-                <a href="{{route('auth.register')}}" class="hidden md:block text-black bg-white hover:bg-black hover:text-white focus:bg-white focus:text-black border border-black font-medium text-sm px-5 py-1 focus:outline-none cursor-pointer">تسجيل</a>
+                @guest
+                <a href="{{route('auth.login', ['redirect' => request()->path() == '/' ? '' : request()->path()])}}" class="hidden md:block text-white bg-black hover:bg-white hover:text-black focus:bg-black focus:text-white border border-black font-medium text-sm px-5 py-1 focus:outline-none cursor-pointer">إنشاء </a>
+                <a href="{{route('auth.register', ['redirect' => request()->path() == '/' ? '' : request()->path()])}}" class="hidden md:block text-black bg-white hover:bg-black hover:text-white focus:bg-white focus:text-black border border-black font-medium text-sm px-5 py-1 focus:outline-none cursor-pointer">تسجيل</a>
+                @endguest
+                @auth
+                <a href="{{route('dashboard')}}" class="hidden md:block text-white bg-black hover:bg-white hover:text-black focus:bg-black focus:text-white border border-black font-medium text-sm px-5 py-1 focus:outline-none cursor-pointer">حسابي</a> 
+                @endauth
 
                 {{-- mobile only --}}
                 <a href="{{ route('dashboard') }}" class="block md:hidden">
@@ -22,12 +27,15 @@
                     @isset($header_categories)
                     @foreach ($header_categories as $item)
                     <li>
-                        <a href="{{route('category.article', ['category' => $item->id])}}" class="text-black hover:text-primary-500">{{$item->name}}</a>
+                        <a href="{{route('category.articles', $item->slug)}}" class="text-black hover:text-primary-500 {{Route::current()->getName() == $item->slug ? 'fill-primary-500' : 'fill-black'}}">{{$item->name}}</a>
                     </li>
                     @endforeach
                     @endisset
                     <li>
-                        <a href="{{route('printed_magazine')}}" class="text-black hover:text-primary-500">مجلة مطبوعة</a>
+                        <a href="{{route('archive.index')}}" class="text-black hover:text-primary-500 {{Route::current()->getName() == 'archive.index' ? 'fill-primary-500' : 'fill-black'}}">سجلات النهضة</a>
+                    </li>
+                    <li>
+                        <a href="{{route('printed_magazine')}}" class="text-black hover:text-primary-500 {{Route::current()->getName() == 'printed_magazine' ? 'fill-primary-500' : 'fill-black'}}">مجلة مطبوعة</a>
                     </li>
                 </ul>
             </nav>

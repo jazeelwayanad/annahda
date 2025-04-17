@@ -39,6 +39,12 @@ class Magazine extends Component implements HasForms, HasTable
                     ->mutateFormDataUsing(function (array $data): array {
                         $data['article_ids'] = json_encode($data['article_ids']);
                         return $data;
+                    })
+                    ->after(function (MagazineModel $record) {
+                        foreach(json_decode($record->article_ids) as $artcle){
+                            $article = Article::find($artcle);
+                            $article->update(['magazine_id'=>$record->id]);
+                        }
                     }),
             ])
             ->actions([
@@ -73,7 +79,7 @@ class Magazine extends Component implements HasForms, HasTable
                 ))
                 ->label('Select Year')
                 ->required()
-                ->unique(ignorable: $record)
+                // ->unique(ignorable: $record)
                 ->searchable(),
             Forms\Components\Select::make('start_month')
                 ->options($months)

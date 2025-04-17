@@ -67,7 +67,7 @@
                 @isset($footer_categories)
                 @foreach ($footer_categories as $item)
                 <li>
-                    <a href="#" class="text-white hover:text-primary-500 dark:text-white">{{$item->name}}</a>
+                    <a href="{{route('category.articles', $item->slug)}}" class="text-white hover:text-primary-500 dark:text-white">{{$item->name}}</a>
                 </li>
                 @endforeach
                 @endisset
@@ -93,7 +93,7 @@
 
     {{-- copyright --}}
     <div class="w-full mt-4 text-center text-white text-sm">
-        Annahda.in | All rights reserved &copy; 2024
+        Annahda.in | All rights reserved &copy; {{ now()->year }}
     </div>
     
 </footer>
