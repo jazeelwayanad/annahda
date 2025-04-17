@@ -10,6 +10,7 @@ use ImageKit\ImageKit;
 use League\Flysystem\Filesystem;
 use TaffoVelikoff\ImageKitAdapter\ImagekitAdapter;
 use App\Models;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -47,10 +48,11 @@ class AppServiceProvider extends ServiceProvider
             return $user->hasAnyRole(['super-admin','developer']) ? true : null;
         });
 
-        $categories = Models\Category::all();
-        $pages = Models\Page::all();
+        
+        if(Schema::hasTable('categories') && Schema::hasTable('pages')) {
+            $categories = Models\Category::all();
+            $pages = Models\Page::all();
 
-        if(count($categories)){
             view()->composer('components.header', function ($view) use ($categories) {
                 $view->with([
                     'header_categories' => $categories,
