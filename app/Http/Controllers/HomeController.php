@@ -52,15 +52,6 @@ class HomeController extends Controller
         }
     }
 
-    public function getArticles($category)
-    {
-        // echo $category;
-        $articles = Article::with(['category', 'author'])->published()->where('category_id', $category)->paginate(8);
-        return view('article-list', [
-            'articles' => $articles,
-        ]);
-    }
-
     public function show_page(string $slug)
     {
         $page = Page::where('slug', $slug)->first();

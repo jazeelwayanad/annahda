@@ -40,7 +40,7 @@
                         <img src="{{ env('IMAGEKIT_ENDPOINT') . '/tr:w-1000,h-480/' . $slide->image }}" alt="slide" class="w-full">
                     </a>
                     @else
-                    <a href="{{route('view-article', ['category' => $slide->article->category->slug, 'slug'=> $slide->article->slug])}}" class="relative w-full">
+                    <a href="{{route('article.show', ['category' => $slide->article->category->slug, 'slug'=> $slide->article->slug])}}" class="relative w-full">
                         <img src="{{ env('IMAGEKIT_ENDPOINT') . '/tr:w-1000,h-800/' . $slide->article->thumbnail }}" alt="Background Image" class="w-full h-full object-cover md:hidden">
                         <img src="{{ env('IMAGEKIT_ENDPOINT') . '/tr:w-1000,h-480/' . $slide->article->thumbnail }}" alt="Background Image" class="w-full h-full object-cover hidden md:block">
                 
@@ -111,7 +111,7 @@
                     <ul class="splide__list">
                         @foreach ($popular_articles as $article)
                         <li class="splide__slide">
-                            <a href="{{route('view-article', ['category' => $article->category->slug, 'slug'=> $article->slug])}}" class=" w-full">
+                            <a href="{{route('article.show', ['category' => $article->category->slug, 'slug'=> $article->slug])}}" class=" w-full">
                                 <img src="{{ env('IMAGEKIT_ENDPOINT') . '/tr:w-250,h-350/' . $article->thumbnail }}" alt="Background Image" class="w-full h-full object-cover">
                         
                                 <!-- Overlay -->
@@ -152,7 +152,7 @@
 
             <div class="w-full mt-8 text-right grid grid-cols-1 lg:grid-cols-3 gap-6" dir="rtl">
                 @foreach ($premium_articles as $article)
-                <a href="{{route('view-article', ['category' => $article->category->slug, 'slug'=> $article->slug])}}" class="flex flex-col items-center bg-white border-0 border-gray-200 shadow-sm hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                <a href="{{route('article.show', ['category' => $article->category->slug, 'slug'=> $article->slug])}}" class="flex flex-col items-center bg-white border-0 border-gray-200 shadow-sm hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                     <img class="object-cover w-full h-96 md:h-auto md:w-48 lg:w-auto" src="{{ env('IMAGEKIT_ENDPOINT') . '/tr:w-750,h-500,c-at_max_enlarge/' . $article->thumbnail }}" alt="">
                     <div class="w-full max-w-md flex flex-col justify-between py-6 px-6 leading-normal">
                         <h5 class="text-2xl font-bold tracking-tight text-black dark:text-white">{{$article->title}}</h5>
@@ -180,7 +180,7 @@
 
             <div class="w-full mt-8 text-right grid grid-cols-1 lg:grid-cols-2 gap-6" dir="rtl">
                 @foreach ($latest_articles as $article)
-                <a href="{{route('view-article', ['category' => $article->category->slug, 'slug'=> $article->slug])}}" class="flex flex-col items-center bg-gray-100 border-0 border-gray-200 shadow-sm md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                <a href="{{route('article.show', ['category' => $article->category->slug, 'slug'=> $article->slug])}}" class="flex flex-col items-center bg-gray-100 border-0 border-gray-200 shadow-sm md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                     <img class="object-cover w-full h-96 md:h-auto md:w-48 lg:w-auto lg:max-w-xs" src="{{ env('IMAGEKIT_ENDPOINT') . '/tr:w-750,h-700/' . $article->thumbnail }}" alt="{{$article->title}}">
                     <div class="w-full max-w-md flex flex-col justify-between py-4 px-6 leading-normal">
                         <h5 class="text-2xl font-bold tracking-tight text-black dark:text-white">{{$article->title}}</h5>

@@ -23,7 +23,7 @@ class Category extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(CategoryModel::query())
+            ->query(CategoryModel::withCount('articles'))
             ->columns([
                 Columns\ImageColumn::make('image')
                     ->disk('imagekit'),
@@ -32,6 +32,9 @@ class Category extends Component implements HasForms, HasTable
                     ->sortable(),
                 Columns\TextColumn::make('slug')
                     ->searchable()
+                    ->sortable(),
+                Columns\TextColumn::make('articles_count')
+                ->label('Total Articles')
                     ->sortable(),
                 Columns\IconColumn::make('status')
                 ->label('Visibility'),

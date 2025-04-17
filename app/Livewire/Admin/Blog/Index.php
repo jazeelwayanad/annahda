@@ -22,10 +22,12 @@ class Index extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Article::where('status', 'published')
-            ->orWhereHas('author', function ($query) {
-                $query->where('type', 'admin');
-            }))
+            ->query(Article::with('author','category')
+                ->where('status', 'published')
+                ->orWhereHas('author', function ($query) {
+                    $query->where('type', 'admin');
+                })
+            )
             ->columns([
                 Columns\ImageColumn::make('thumbnail')
                     ->disk('imagekit'),
