@@ -3,7 +3,7 @@
         Sign In
     </x-slot>
 
-    <form class="space-y-6" action="/login" method="POST">
+    <form class="space-y-6" action="{{ route('auth.login', ['redirect' => request()->query('redirect')??'']) }}" method="POST">
         @csrf
         <div>
             <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>

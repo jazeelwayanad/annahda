@@ -34,7 +34,11 @@ class AuthController extends Controller
             // login the user
             Auth::login($user);
 
-            return redirect()->route('app.company');
+            if($request->query('redirect') && $request->query('redirect') !== ""){
+                return redirect($request->query('redirect'));
+            }
+
+            return redirect()->route('dashboard');
         }catch(\Exception $error){
             DB::rollBack();
             return redirect()->back()->with('error', $error->getMessage());
@@ -52,6 +56,10 @@ class AuthController extends Controller
             if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
      
+                if($request->query('redirect') && $request->query('redirect') !== ""){
+                    return redirect($request->query('redirect'));
+                }
+
                 return redirect()->intended('dashboard');
             }
             
