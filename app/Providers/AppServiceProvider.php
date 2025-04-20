@@ -51,7 +51,7 @@ class AppServiceProvider extends ServiceProvider
         
         if(Schema::hasTable('categories') && Schema::hasTable('pages')) {
             $categories = Models\Category::all();
-            $pages = Models\Page::all();
+            $pages = Models\Page::all(); 
 
             view()->composer('components.header', function ($view) use ($categories) {
                 $view->with([
