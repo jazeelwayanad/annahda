@@ -17,6 +17,8 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->decimal('sale_price', 10, 2);
             $table->decimal('discount_percentage', 10, 2);
+            $table->string('razorpay_plan_id')->nullable();
+            $table->string('razorpay_offer_id')->nullable();
             $table->timestamps();
         });
     }

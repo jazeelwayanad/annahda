@@ -23,7 +23,7 @@ class ArticleFactory extends Factory
             'title' => fake()->name(),
             'slug' => Str::slug(fake()->name()),
             'content' => fake()->paragraphs(5, true),
-            'thumbnail' => "pages/thumbnails/01JH4X3E439SH01JASAR49XPAN.jpg?ik-sdk-version=php-2.0.0",
+            'thumbnail' => "pages/thumbnails/01JH4X3E439SH01JASAR49XPAN.jpg",
             'status' => 'published',
             'reviewed' => true,
             'comments' => true,

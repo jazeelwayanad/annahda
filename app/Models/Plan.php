@@ -11,5 +11,7 @@ class Plan extends Model
         'price',
         'sale_price',
         'discount_percentage',
+        'razorpay_plan_id',
+        'razorpay_offer_id',
     ];
 }

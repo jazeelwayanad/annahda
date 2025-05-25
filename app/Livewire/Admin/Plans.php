@@ -43,10 +43,13 @@ class Plans extends Component implements HasForms, HasTable
     {
         return [
             Forms\Components\TextInput::make('name')
-                ->disabled(),
-            Forms\Components\TextInput::make('price'),
-            Forms\Components\TextInput::make('sale_price'),
-            Forms\Components\TextInput::make('discount_percentage'),
+                ->disabled()
+                ->required(),
+            Forms\Components\TextInput::make('razorpay_plan_id')->required(),
+            Forms\Components\TextInput::make('price')->required(),
+            Forms\Components\TextInput::make('sale_price')->required(),
+            Forms\Components\TextInput::make('discount_percentage')->required(),
+            Forms\Components\TextInput::make('razorpay_offer_id'),
         ];
     }
 

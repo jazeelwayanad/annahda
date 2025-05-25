@@ -76,7 +76,8 @@ class CreateArticle extends Component implements HasForms
                         Forms\Components\Select::make('category_id')
                             ->required()
                             ->relationship(name: 'category', titleAttribute: 'name')
-                            ->searchable(),
+                            ->searchable()
+                            ->preload(),
                         Forms\Components\Select::make('tags')
                             ->relationship(name: 'tags', titleAttribute: 'name')
                             ->multiple()
