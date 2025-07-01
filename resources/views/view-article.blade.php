@@ -28,7 +28,7 @@
             <h2 class="text-xl lg:text-2xl xl:text-3xl font-bold article-heading-font" lang="ar">{{$article->title}}</h2>
 
             <div class="w-full mt-6">
-                <img src="{{ env('IMAGEKIT_ENDPOINT') . '/' . $article->thumbnail }}" alt="{{$article->title}}" class="rounded-2xl">
+                <img src="{{ $article->thumbnail_url }}" alt="{{$article->title}}" class="rounded-2xl">
             </div>
 
             {{-- date and category --}}

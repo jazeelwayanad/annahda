@@ -29,8 +29,7 @@ class Index extends Component implements HasForms, HasTable
                 })
             )
             ->columns([
-                Columns\ImageColumn::make('thumbnail')
-                    ->disk('imagekit'),
+                Columns\ImageColumn::make('thumbnail'),
                 Columns\TextColumn::make('title')
                     ->searchable(),
                 Columns\TextColumn::make('slug')

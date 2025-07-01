@@ -29,7 +29,7 @@ class Slides extends Component implements HasForms, HasTable
                 Columns\TextColumn::make('type'),
                 Columns\TextColumn::make('article.title'),
                 Columns\ImageColumn::make('image')
-                    ->disk('imagekit'),
+                    ->disk('s3'),
                 Columns\TextColumn::make('link'),
                 Columns\TextColumn::make('status')
                 ->label('Status') 
@@ -71,11 +71,14 @@ class Slides extends Component implements HasForms, HasTable
 
             Forms\Components\FileUpload::make('image')
                 ->image()
-                ->disk('imagekit')
+                ->disk('s3')
                 ->directory('slides')
+                ->visibility('publico')
                 ->imageCropAspectRatio('1.91:1')
                 ->imageResizeTargetWidth('1200')
                 ->imageResizeTargetHeight('630')
+                // ->getUploadedFileNameForStorageUsing(fn ($file) => $file->getClientOriginalName())
+                ->formatStateUsing(fn (string $state) => [str_replace(env('AWS_URL'), '', $state)])
                 ->helperText("Upload image with ratio 1.91:1 or width: 1200px and Height: 630px")
                 ->required(fn (Get $get) => $get('type') == 'custom')
                 ->hidden(fn (Get $get) => $get('type') !== 'custom'),

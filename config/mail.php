@@ -95,6 +95,13 @@ return [
             ],
         ],
 
+        'brevo' => [
+            'transport' => 'brevo',
+            'mailers' => [
+                'log',
+            ],
+        ],
+
     ],
 
     /*

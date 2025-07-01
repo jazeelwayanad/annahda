@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Plan;
 use App\Models\Subscription;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Razorpay\Api\Api;
@@ -21,8 +22,10 @@ class CheckoutController extends Controller
         if(!$plan) {
             return redirect()->back()->with('error', 'Plan not found');
         }
+
+        $view = $plan->name == 'Annahda Plus' ? 'checkout.v1' : 'checkout.v2';
         
-        return view('checkout.v1', ['plan' => $plan]);
+        return view($view, ['plan' => $plan]);
     }
 
     public function create_razorpay_order(Request $request)
@@ -30,7 +33,7 @@ class CheckoutController extends Controller
         try{
             $request->validate([
                 'plan' => 'required',
-                'address' => 'required',
+                'billing_address' => 'required',
                 'user' => 'required',
                 'quantity' => 'required|numeric|min:1',
             ]);
@@ -45,9 +48,15 @@ class CheckoutController extends Controller
                 throw new \Exception('Plan not found');
             }
 
-            $address = Address::find($request->address);
-            if(!$address){
+            $billing_address = Address::find($request->billing_address);
+            if(!$billing_address){
                 throw new \Exception('Address not found');
+            }
+
+            $shipping_address = null;
+            if($request->shipping_address){
+                $shipping_address = Address::find($request->shipping_address);
+                if(!$shipping_address) throw new \Exception('Address not found');
             }
 
             $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
@@ -66,7 +75,8 @@ class CheckoutController extends Controller
             Subscription::create([
                 'user_id' => $user->id,
                 'plan_id' => $plan->id,
-                'billing_address' => $address->id,
+                'billing_address' => $billing_address->id,
+                'shipping_address' => $shipping_address ? $shipping_address->id : null,
                 'razorpay_subscription_id' => $order['id'],
                 'status' => "created",
                 'expiry_date' => $order['expire_by'],
@@ -86,7 +96,7 @@ class CheckoutController extends Controller
                 'status' => false,
                 'message' => 'Razorpay order created successfully',
                 'subscription_id' => $order['id'],
-                'phone' => $address->phone_number,
+                'phone' => $billing_address->phone_number,
             ], 200);
         }catch(\Exception $error){
             DB::rollBack();
@@ -113,7 +123,7 @@ class CheckoutController extends Controller
             }
 
             // authorize payment
-            $generated_signature = hash_hmac('sha256', $request->razorpay_payment_id + "|" + $Subscription->razorpay_subscription_id, config('services.razorpay.secret'));
+            $generated_signature = hash_hmac('sha256', $request->razorpay_payment_id . "|" . $Subscription->razorpay_subscription_id, config('services.razorpay.secret'));
 
             if ($generated_signature != $request->razorpay_signature) {
                 throw new \Exception('Verifying authorization payment failed');
@@ -158,6 +168,14 @@ class CheckoutController extends Controller
                 'status' => $request->payload['subscription']['entity']['status'],
                 'paid_count' => $request->payload['subscription']['entity']['paid_count'],
             ]);
+
+            if($request->event == "subscription.activated") {
+                $subscription->update([
+                    'start_date' => Carbon::createFromTimestamp($request->payload['subscription']['entity']['start_at'])->format('Y-m-d'),
+                    'end_date' => Carbon::createFromTimestamp($request->payload['subscription']['entity']['current_end'])->format('Y-m-d'),
+                    'expiry_date' => Carbon::createFromTimestamp($request->payload['subscription']['entity']['end_at'])->format('Y-m-d'),
+                ]);
+            }
 
             if($request->event == "subscription.charged" && $request->payload['payment']){
                 if($subscription->invoice) {

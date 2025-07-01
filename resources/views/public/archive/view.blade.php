@@ -11,14 +11,14 @@
             <div class="w-full text-right flex flex-col md:flex-row items-center justify-center gap-6" dir="rtl">
                 <div class="w-full max-w-md">
                     <a href="#">
-                        <img src="{{$magazine->cover_image()}}" alt="Annahda Magazine Cover Image" class="w-full">
+                        <img src="{{ $magazine->cover_image_url }}" alt="Annahda Magazine Cover Image" class="w-full">
                     </a>
                 </div>
                 <div class="w-full lg:px-6 py-8">
                     <div class="w-full mt-8 grid grid-cols-1 grid-rows-1 lg:grid-cols-2 gap-6">
                         @foreach ($main_articles->take(2)->all() as $article)
                         <a href="{{route('article.show', ['category' => $article->category->slug, 'slug'=> $article->slug])}}" class="relative w-full h-[210px] {{ $loop->iteration > 1 ? 'md:hidden lg:block' : '' }}">
-                            <img src="{{env('IMAGEKIT_ENDPOINT') . '/' . $article->thumbnail}}" alt="Background Image" class="w-full h-full object-cover">
+                            <img src="{{ $article->thumbnail_url }}" alt="Background Image" class="w-full h-full object-cover">
                     
                             <!-- Overlay -->
                             <div class="p-4 absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-between">
@@ -75,7 +75,7 @@
         <div class="w-full mt-4 text-right flex flex-col divide-y divide-gray-300" dir="rtl">
             @foreach ($all_articles as $article)
             <a href="{{route('article.show', ['category' => $article->category->slug, 'slug'=> $article->slug])}}" class="w-full py-6 flex flex-col sm:flex-row items-center group">
-                <img class="object-cover w-full h-56 md:h-auto md:w-48 lg:w-auto lg:max-w-64" src="{{ env('IMAGEKIT_ENDPOINT') . '/tr:w-450,h-300/' . $article->thumbnail }}" alt="{{$article->title}}">
+                <img class="object-cover w-full h-56 md:h-auto md:w-48 lg:w-auto lg:max-w-64" src="{{ $article->thumbnail_url }}" alt="{{$article->title}}">
                 <div class="w-full max-w-md flex flex-col justify-between py-4 px-6 leading-normal">
                     <h5 class="text-2xl font-bold tracking-tight text-black  group-hover:text-primary-600">{{$article->title}}</h5>
                     <p class="mt-4 font-normal text-gray-700">{{$article->category->name}} | {{ $article->author->name }}</p>

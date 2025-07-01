@@ -40,4 +40,8 @@ return [
         'secret' => env('RAZORPAY_SECRET_KEY'),
     ],
 
+    'brevo' => [
+        'key' => env('BREVO_API_KEY'),
+    ],
+
 ];

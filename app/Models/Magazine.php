@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class Magazine extends Model
 {
@@ -20,9 +21,9 @@ class Magazine extends Model
         'article_ids' => 'array'
     ];
 
-    public function cover_image(): string
+    public function getCoverImageUrlAttribute(): string
     {
-        return env('IMAGEKIT_ENDPOINT') . '/' . $this->cover_image;
+        return Storage::disk('s3')->url($this->cover_image);
     }
 
     public function articles(): HasMany

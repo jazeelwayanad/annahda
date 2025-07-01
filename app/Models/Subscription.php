@@ -38,16 +38,27 @@ class Subscription extends Model
     {
         return $this->belongsTo(Plan::class);
     }
-    public function billing_address()
+    public function billingAddress()
     {
         return $this->belongsTo(Address::class, 'billing_address');
     }
-    public function shipping_address()
+    public function shippingAddress()
     {
         return $this->belongsTo(Address::class, 'shipping_address');
     }
     public function invoice(): HasOne
     {
         return $this->hasOne(Invoice::class);
+    }
+
+    public function casts(): array
+    {
+        return [
+            'expiry_date' => 'date',
+            'start_date' => 'date',
+            'end_date' => 'date',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
     }
 }

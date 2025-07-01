@@ -37,6 +37,8 @@ class HomeController extends Controller
             // slider
             $slides = Slide::with('article')->where('status', true)->get();
 
+            // dd($slides);
+
             return view('welcome', [
                 'categories' => $categories,
                 'articles' => $articles,

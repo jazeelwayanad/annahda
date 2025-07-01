@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Article extends Model
 {
@@ -46,6 +47,11 @@ class Article extends Model
     public function scopePremium(Builder $query): void
     {
         $query->where('premium', '=',  true);
+    }
+
+    public function getThumbnailUrlAttribute(): string
+    {
+        return Storage::disk('s3')->url($this->thumbnail);
     }
 
     public function author(): BelongsTo

@@ -10,7 +10,10 @@ use ImageKit\ImageKit;
 use League\Flysystem\Filesystem;
 use TaffoVelikoff\ImageKitAdapter\ImagekitAdapter;
 use App\Models;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
+use Symfony\Component\Mailer\Bridge\Brevo\Transport\BrevoTransportFactory;
+use Symfony\Component\Mailer\Transport\Dsn;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -65,5 +68,15 @@ class AppServiceProvider extends ServiceProvider
                 ]);
             });
         }
+
+        Mail::extend('brevo', function () {
+            return (new BrevoTransportFactory())->create(
+                new Dsn(
+                    'brevo+api',
+                    'default',
+                    config('services.brevo.key')
+                )
+            );
+        });
     }
 }

@@ -24,8 +24,8 @@ class ArticleList extends Component implements HasForms, HasTable
         return $table
             ->query(Article::where('status', 'requested'))
             ->columns([
-                Columns\ImageColumn::make('thumbnail')
-                    ->disk('imagekit'),
+                Columns\ImageColumn::make('thumbnail'),
+                
                 Columns\TextColumn::make('title')
                     ->searchable(),
                 Columns\TextColumn::make('slug')

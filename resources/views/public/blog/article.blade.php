@@ -7,7 +7,7 @@
         <p class="mt-4 font-normal text-gray-700 dark:text-gray-400">{{$article->category->name}} | {{ $article->author->name }}</p>
 
         <div class="w-full mt-6">
-            <img src="{{ env('IMAGEKIT_ENDPOINT') . '/' . $article->thumbnail }}" alt="{{$article->title}}" class="w-full">
+            <img src="{{ $article->thumbnail_url }}" alt="{{$article->title}}" class="w-full">
         </div>
 
         <div class="w-full max-w-4xl mx-auto mt-6 text-base lg:text-lg text-justify" lang="ar">
@@ -54,7 +54,7 @@
         <div class="w-full mt-8 text-right grid grid-cols-1 lg:grid-cols-2 gap-6" dir="rtl">
             @foreach ($related_articles as $article)
             <a href="{{route('article.show', ['category' => $article->category->slug, 'slug'=> $article->slug])}}" class="flex flex-col items-center bg-gray-100 border-0 border-gray-200 shadow-sm md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 group">
-                <img class="object-cover w-full h-96 md:h-auto md:w-48" src="{{ env('IMAGEKIT_ENDPOINT') . '/tr:w-750,h-650/' . $article->thumbnail }}" alt="{{$article->title}}">
+                <img class="object-cover w-full h-full md:w-48" src="{{ $article->thumbnail_url }}" alt="{{$article->title}}"> {{-- h-96 md:h-auto --}}
                 <div class="w-full max-w-md flex flex-col justify-between py-4 px-6 leading-normal">
                     <h5 class="text-2xl font-bold tracking-tight text-black dark:text-white group-hover:text-primary-500">{{$article->title}}</h5>
                     <p class="mt-6 font-normal text-gray-700 dark:text-gray-400">{{$article->category->name}} | {{ $article->author->name }}</p>

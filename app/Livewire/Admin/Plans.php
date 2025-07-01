@@ -31,7 +31,7 @@ class Plans extends Component implements HasForms, HasTable
                 Columns\TextColumn::make('price'),
                 Columns\TextColumn::make('sale_price'),
                 Columns\TextColumn::make('discount_percentage'),
-                Columns\TextColumn::make('updated_at')->label('Last updated at'),
+                Columns\TextColumn::make('razorpay_plan_id')->label('Plan ID'),
             ])
             ->actions([
                 Actions\EditAction::make()

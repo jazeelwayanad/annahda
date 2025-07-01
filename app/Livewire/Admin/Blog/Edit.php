@@ -47,15 +47,16 @@ class Edit extends Component implements HasForms
                             ->unique(Article::class, 'slug', ignorable: $this->article),
                         Forms\Components\RichEditor::make('content')
                             ->required()
-                            ->fileAttachmentsDisk('imagekit')
+                            ->fileAttachmentsDisk('s3')
                             ->fileAttachmentsDirectory('blog/attachments'),
                     ]),
                     Forms\Components\Section::make('Featured Image')->schema([
                         Forms\Components\FileUpload::make('thumbnail')
                             ->image()
                             ->required()
-                            ->disk('imagekit')
-                            ->directory('blog/thumbnails')
+                            ->disk('s3')
+                            ->directory('blog')
+                            ->visibility('publico')
                             ->imageResizeMode('cover')
                             ->imageCropAspectRatio('1.91:1')
                             ->imageResizeTargetWidth('1200')
