@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Popup extends Model
 {
@@ -17,4 +18,9 @@ class Popup extends Model
     protected $casts = [
         'status' => 'boolean',
     ];
+
+    public function getImageUrlAttribute(): string
+    {
+        return Storage::disk('s3')->url($this->image);
+    }
 }

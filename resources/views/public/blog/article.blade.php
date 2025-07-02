@@ -7,31 +7,23 @@
         <p class="mt-4 font-normal text-gray-700 dark:text-gray-400">{{$article->category->name}} | {{ $article->author->name }}</p>
 
         <div class="w-full mt-6">
-            <img src="{{ env('IMAGEKIT_ENDPOINT') . '/' . $article->thumbnail }}" alt="{{$article->title}}" class="w-full">
+            <img src="{{ $article->thumbnail_url }}" alt="{{$article->title}}" class="w-full">
         </div>
 
-        {{-- date and category --}}
-        {{-- <div class="mt-6 inline-flex items-center gap-4">
-            <p class="text-xl text-primary-500 font-medium">{{ $article->category->name }}</p>
-            <p class="text-base text-slate-700 font-semibold">{{ $article->updated_at->format("d/m/Y") }}</p>
-        </div> --}}
-        
-        {{-- author --}}
-        {{-- <p class="mt-2 text-base text-primary-500 font-medium">{{ $article->author->name }}</p> --}}
-        {{-- content --}}
         <div class="w-full max-w-4xl mx-auto mt-6 text-base lg:text-lg text-justify" lang="ar">
-            @if ($article->premium)
-            {!! str(Str::limit($article->content, Str::length($article->content) / 2))->sanitizeHtml() !!}
-            @else
+            {{-- If the article is not premium, show full content --}}
+            {{-- If the article is premium and the user is authenticated or a Plus member, show full content --}}
+            @if (!$article->premium || (auth()->check() && auth()->user()->isPlusMember()))
             {!! str($article->content)->sanitizeHtml() !!}
+            @else
+            {!! str(Str::limit($article->content, Str::length($article->content) / 2))->sanitizeHtml() !!}
             @endif
         </div>
 
-        {{-- premium  --}}
-        @if ($article->premium)
+        {{-- premium --}}
+        @if (!$article->premium || (auth()->check() && auth()->user()->isPlusMember()))
+        @else
         <div class="w-full min-h-72 bg-primary-50 mt-6 flex flex-col items-center justify-center px-6" dir="ltr">
-            {{-- <hr class="w-52 bg-gray-700 mx-auto" style="height: 2px;"> --}}
-
             <a href="{{ route('annahda_plus') }}"><button class="w-full max-w-fit mt-8 text-white bg-rose-900 hover:bg-black focus:bg-black focus:text-white font-medium text-center text-base px-6 py-2.5 focus:outline-none cursor-pointer">BECOME PLUS MEMBER TO READ FULL ARTICLE</button></a>
 
             @guest
@@ -62,7 +54,7 @@
         <div class="w-full mt-8 text-right grid grid-cols-1 lg:grid-cols-2 gap-6" dir="rtl">
             @foreach ($related_articles as $article)
             <a href="{{route('article.show', ['category' => $article->category->slug, 'slug'=> $article->slug])}}" class="flex flex-col items-center bg-gray-100 border-0 border-gray-200 shadow-sm md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 group">
-                <img class="object-cover w-full h-96 md:h-auto md:w-48" src="{{ env('IMAGEKIT_ENDPOINT') . '/tr:w-750,h-650/' . $article->thumbnail }}" alt="{{$article->title}}">
+                <img class="object-cover w-full h-full md:w-48" src="{{ $article->thumbnail_url }}" alt="{{$article->title}}"> {{-- h-96 md:h-auto --}}
                 <div class="w-full max-w-md flex flex-col justify-between py-4 px-6 leading-normal">
                     <h5 class="text-2xl font-bold tracking-tight text-black dark:text-white group-hover:text-primary-500">{{$article->title}}</h5>
                     <p class="mt-6 font-normal text-gray-700 dark:text-gray-400">{{$article->category->name}} | {{ $article->author->name }}</p>

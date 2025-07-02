@@ -28,7 +28,7 @@ class Pages extends Component implements HasForms, HasTable
                 Columns\TextColumn::make('title'),
                 Columns\TextColumn::make('slug'),
                 Columns\TextColumn::make('content'),
-                Columns\ImageColumn::make('thumbnail')->disk('imagekit'),
+                Columns\ImageColumn::make('thumbnail')->disk('s3'),
                 Columns\TextColumn::make('meta_title'),
                 Columns\TextColumn::make('meta_description'),
                 Columns\TextColumn::make('og_title'),
@@ -70,8 +70,9 @@ class Pages extends Component implements HasForms, HasTable
             Forms\Components\FileUpload::make('thumbnail')
                 ->image()
                 ->required()
-                ->disk('imagekit')
-                ->directory('pages/thumbnails')
+                ->disk('s3')
+                ->directory('pages')
+                ->visibility('publico')
                 ->imageResizeMode('cover')
                 ->imageCropAspectRatio('1.91:1')
                 ->imageResizeTargetWidth('1200')

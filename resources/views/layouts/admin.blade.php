@@ -35,7 +35,7 @@
         <!-- Page Content -->
         <div class="px-2 sm:px-4 pt-4 pb-8 lg:ml-72">
             <div class="container mx-auto">
-                {{-- <x-alert --}}
+                <x-alert />
 
                 <main class="w-full"> 
                     {{ $slot }}

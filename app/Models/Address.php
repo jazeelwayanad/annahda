@@ -10,7 +10,6 @@ class Address extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'email',
         'country',
         'phone_number',
         'address',
