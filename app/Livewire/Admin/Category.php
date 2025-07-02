@@ -47,7 +47,8 @@ class Category extends Component implements HasForms, HasTable
             ->actions([
                 Actions\EditAction::make()
                     ->form($this->form_schema()),
-                Actions\DeleteAction::make(),
+                Actions\DeleteAction::make()
+                    ->visible(fn ($record) => $record->articles->count() === 0),
             ]);
     }
 
