@@ -23,7 +23,12 @@ class BlogController extends Controller
     {
         $article = Article::with(['category','tags','author'])->where('slug', $article)->first();
         $article->increment('views');
-        $related_articles = Category::where('slug', $category)->first()->articles()->with('category','author')->limit(4)->get();
+        $related_articles = Article::with(['category','author'])
+            ->where('category_id', $article->category_id)
+            ->whereNot('slug', $article->slug)
+            ->latest()
+            ->limit(4)
+            ->get();
 
         return view('public.blog.article', ['article' => $article, 'related_articles' => $related_articles]);
     }

@@ -98,6 +98,6 @@ class Coupon extends Component implements HasForms, HasTable
     #[Layout('layouts.admin')]
     public function render()
     {
-        return view('livewire.admin.Coupon');
+        return view('livewire.admin.coupon');
     }
 }
