@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin;
@@ -26,9 +27,11 @@ Route::get('magazine-archive/{year}/{start}-{end}', [ArchiveController::class, '
 
 Route::post('newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');
 
+// subscription
 Route::view('annahda-plus', 'annahda-plus')->name('annahda_plus');
 Route::view('subscribe-to-printed-magazine', 'printed-magazine')->name('printed_magazine');
-Route::post('checkout', [CheckoutController::class, 'process'])->name('checkout');
+Route::get('checkout/{plan}', [CheckoutController::class, 'process'])->name('checkout')->middleware('auth');
+Route::post('create-subscription', [CheckoutController::class, 'create_razorpay_order']);
 
 
 /**
@@ -104,5 +107,9 @@ Route::name('app.')->prefix('app')->middleware([Middleware\UserOnlyAccess::class
     Route::middleware('auth')->group(function(){
         Route::view('dashboard', 'app.dashboard')->name('dashboard');
         Route::resource('blog', App\BlogController::class);
+        Route::get('subscriptions', [App\SubscriptionController::class, 'index'])->name('subscriptions.index');
+        Route::get('subscriptions/invoice/{id}', [App\SubscriptionController::class, 'invoice'])->name('subscriptions.invoice');
+
+        Route::post('address/create', [AddressController::class, 'store'])->name('address.create');
     });
 });

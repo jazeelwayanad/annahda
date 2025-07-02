@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Page extends Model
 {
@@ -19,4 +20,9 @@ class Page extends Model
         'og_title',
         'og_description',
     ];
+
+    public function getThumbnailUrlAttribute(): string
+    {
+        return Storage::disk('s3')->url($this->thumbnail);
+    }
 }

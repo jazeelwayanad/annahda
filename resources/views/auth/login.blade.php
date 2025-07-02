@@ -8,7 +8,7 @@
         <div>
             <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>
             <div class="mt-2">
-                <input id="email" name="email" type="email" autocomplete="email" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:border-primary-500 block w-full p-2.5 focus:outline-none" placeholder="Email">
+                <input id="email" name="email" type="email" value="{{ old('email') }}" autocomplete="email" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:border-primary-500 block w-full p-2.5 focus:outline-none" placeholder="Email">
             </div>                                  
         </div>
 

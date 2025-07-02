@@ -10,6 +10,10 @@ use ImageKit\ImageKit;
 use League\Flysystem\Filesystem;
 use TaffoVelikoff\ImageKitAdapter\ImagekitAdapter;
 use App\Models;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Schema;
+use Symfony\Component\Mailer\Bridge\Brevo\Transport\BrevoTransportFactory;
+use Symfony\Component\Mailer\Transport\Dsn;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,14 +47,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::before(function ($user, $ability) {
+        Gate::before(function ($user) {
             return $user->hasAnyRole(['super-admin','developer']) ? true : null;
         });
 
-        $categories = Models\Category::all();
-        $pages = Models\Page::all();
+        
+        if(Schema::hasTable('categories') && Schema::hasTable('pages')) {
+            $categories = Models\Category::all();
+            $pages = Models\Page::all(); 
 
-        if(count($categories)){
             view()->composer('components.header', function ($view) use ($categories) {
                 $view->with([
                     'header_categories' => $categories,
@@ -63,5 +68,15 @@ class AppServiceProvider extends ServiceProvider
                 ]);
             });
         }
+
+        Mail::extend('brevo', function () {
+            return (new BrevoTransportFactory())->create(
+                new Dsn(
+                    'brevo+api',
+                    'default',
+                    config('services.brevo.key')
+                )
+            );
+        });
     }
 }

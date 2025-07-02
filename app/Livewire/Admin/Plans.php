@@ -31,7 +31,7 @@ class Plans extends Component implements HasForms, HasTable
                 Columns\TextColumn::make('price'),
                 Columns\TextColumn::make('sale_price'),
                 Columns\TextColumn::make('discount_percentage'),
-                Columns\TextColumn::make('updated_at')->label('Last updated at'),
+                Columns\TextColumn::make('razorpay_plan_id')->label('Plan ID'),
             ])
             ->actions([
                 Actions\EditAction::make()
@@ -43,10 +43,13 @@ class Plans extends Component implements HasForms, HasTable
     {
         return [
             Forms\Components\TextInput::make('name')
-                ->disabled(),
-            Forms\Components\TextInput::make('price'),
-            Forms\Components\TextInput::make('sale_price'),
-            Forms\Components\TextInput::make('discount_percentage'),
+                ->disabled()
+                ->required(),
+            Forms\Components\TextInput::make('razorpay_plan_id')->required(),
+            Forms\Components\TextInput::make('price')->required(),
+            Forms\Components\TextInput::make('sale_price')->required(),
+            Forms\Components\TextInput::make('discount_percentage')->required(),
+            Forms\Components\TextInput::make('razorpay_offer_id'),
         ];
     }
 

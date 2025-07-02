@@ -13,7 +13,7 @@
         <div class="w-full text-right flex flex-col md:flex-row items-center justify-center gap-6" dir="rtl">
             <div class="w-full max-w-md">
                 <a href="#">
-                    <img src="{{$magazine->cover_image()}}" alt="Annahda Magazine Cover Image" class="w-full">
+                    <img src="{{ $magazine->cover_image_url }}" alt="Annahda Magazine Cover Image" class="w-full">
                 </a>
             </div>
             <div class="w-full lg:px-6 py-8">
@@ -22,7 +22,7 @@
                 <div class="w-full mt-8 grid lg:grid-cols-3 gap-6">
                     @foreach ($magazine->articles->take(3)->all() as $article)
                     <a href="{{route('article.show', ['category' => $article->category->slug, 'slug'=> $article->slug])}}" class="relative w-full h-[210px]">
-                        <img src="{{env('IMAGEKIT_ENDPOINT') . '/' . $article->thumbnail}}" alt="Background Image" class="w-full h-full object-cover">
+                        <img src="{{ $article->thumbnail_url }}" alt="Background Image" class="w-full h-full object-cover">
                 
                         <!-- Overlay -->
                         <div class="p-4 absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-between">

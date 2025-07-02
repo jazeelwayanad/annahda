@@ -12,6 +12,7 @@
             <div class="hidden space-x-4 lg:flex font-medium text-base">
                 <a href="{{route('app.dashboard')}}" class="block py-4 px-4 {{ request()->routeIs('app.dashboard') ? 'text-primary-600 border-b border-primary-500 font-bold' : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50' }}">Dashboard</a>
                 <a href="{{route('app.blog.index')}}" class="block py-4 px-4 {{ request()->routeIs('app.blog.index') ? 'text-primary-600 border-b border-primary-500 font-bold' : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50' }}">My Articles</a>
+                <a href="{{route('app.subscriptions.index')}}" class="block py-4 px-4 {{ request()->routeIs('app.subscriptions.index') ? 'text-primary-600 border-b border-primary-500 font-bold' : 'text-gray-700 hover:text-primary-700 hover:bg-gray-50' }}">My Subscriptions</a>
             </div>
         </div>
         <div class="w-full py-3 flex justify-end items-center relative">

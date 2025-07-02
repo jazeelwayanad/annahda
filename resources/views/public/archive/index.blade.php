@@ -19,7 +19,7 @@
                 <div class="w-full">
                     <h3 class="text-lg font-semibold text-center">{{ $carbon::create()->day(1)->month((int)$magazine->start_month)->format('M') }} - {{ $carbon::create()->day(1)->month((int)$magazine->end_month)->format('M') }}</h3>
 
-                    <img src="{{ $magazine->cover_image() }}" alt="" class="mt-4 w-full">
+                    <img src="{{ $magazine->cover_image_url }}" alt="" class="mt-4 w-full">
                 </div>
             </a>
             @endforeach

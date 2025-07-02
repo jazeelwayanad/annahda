@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class Category extends Model
 {
@@ -18,6 +19,11 @@ class Category extends Model
     protected $casts = [
         'status' => 'boolean',
     ];
+
+    public function getImageUrlAttribute(): string
+    {
+        return Storage::disk('s3')->url($this->image);
+    }
 
     public function articles(): HasMany
     {

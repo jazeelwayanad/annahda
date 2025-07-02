@@ -19,6 +19,8 @@
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             <x-app.header />
 
+            <x-alert />
+
             <!-- Page Heading -->
             @isset($header)
                 <header class="bg-white dark:bg-gray-800 shadow">

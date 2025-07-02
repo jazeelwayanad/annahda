@@ -45,7 +45,9 @@
                             <h3 class="mt-2 text-4xl font-bold">₹400.00/yr</h3>
                         </div>
 
-                        <button class="w-full text-white bg-black hover:bg-white hover:text-black focus:bg-black focus:text-white border border-black font-medium text-center text-2xl px-5 py-2.5 focus:outline-none cursor-pointer">إختار</button>
+                        <a href="{{ route('checkout', 'Main Magazine') }}" class="block w-full">
+                            <button class="w-full text-white bg-black hover:bg-white hover:text-black focus:bg-black focus:text-white border border-black font-medium text-center text-2xl px-5 py-2.5 focus:outline-none cursor-pointer">إختار</button>
+                        </a>
                     </div>
                 </div>
                 <div class="w-full min-h-96 px-6 py-8 max-w-md text-right bg-primary-50 shadow-lg rounded-md">
@@ -71,7 +73,9 @@
                             <h3 class="mt-2 text-4xl font-bold">₹380.00/yr</h3>
                         </div>
 
-                        <button class="w-full text-white bg-black hover:bg-white hover:text-black focus:bg-black focus:text-white border border-black font-medium text-center text-2xl px-5 py-2.5 focus:outline-none cursor-pointer">إختار</button>
+                        <a href="{{ route('checkout', 'Kids Magazine') }}" class="block w-full">
+                            <button class="w-full text-white bg-black hover:bg-white hover:text-black focus:bg-black focus:text-white border border-black font-medium text-center text-2xl px-5 py-2.5 focus:outline-none cursor-pointer">إختار</button>
+                        </a>
                     </div>
                 </div>
             </div>
