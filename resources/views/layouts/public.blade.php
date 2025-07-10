@@ -15,8 +15,8 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
     <!-- Styles / Scripts -->
-    @vite('resources/css/app.css')
-    @yield('styles')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
 </head>
 <body class="font-sans antialiased dark:bg-black dark:text-white/50">
     <div class="w-full max-w-7xl mx-auto">
@@ -30,8 +30,7 @@
         <x-footer />
     </div>
 
-    @vite('resources/js/app.js')
-    @yield('scripts')
+    @stack('scripts')
     <script type="module">
         $(document).ready(function(){
             $('#public-mobile-menu-open').on('click', function(){

@@ -1,27 +1,7 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="light">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <meta name="og:site_name" content="Annahdha">
-    <title>Annahda</title>
-    <meta name="og:title" content="Annahdha">
-    <meta name="og:description" content="Annahdha">
-    <meta name="description" content="Annahdha">
-    <meta name="robots" content="index, follow" />
-    <meta name="og:type" content="website" />
-    <meta name="og:url" content="{{ env('APP_URL') }}">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-
-    <!-- Styles / Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+<x-public-layout>
+    @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
-</head>
-
-<body class="font-sans antialiased dark:bg-black dark:text-white/50">
-    <x-header />
+    @endpush
 
     @if(count($slides))
     <section id="hero-carousel" class="splide w-full container mx-auto relative" aria-label="Beautiful Images">
@@ -188,8 +168,7 @@
     </div>
     @endif
 
-    <x-footer />
-
+    @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <script>
@@ -228,5 +207,5 @@
             }
         });
     </script>
-</body>
-</html>
+    @endpush
+</x-public-layout>
