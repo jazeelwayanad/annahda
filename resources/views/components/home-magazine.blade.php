@@ -10,7 +10,7 @@
             <h2 class="font-extrabold text-3xl text-right" lang="ar">سجلات النهضة</h2>
         </div>
 
-        <div class="w-full text-right flex flex-col md:flex-row items-center justify-center gap-6" dir="rtl">
+        <div class="w-full text-right flex flex-col md:flex-row items-start justify-center gap-6" dir="rtl">
             <div class="w-full max-w-md">
                 <a href="#">
                     <img src="{{ $magazine->cover_image_url }}" alt="Annahda Magazine Cover Image" class="w-full">

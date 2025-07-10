@@ -16,7 +16,7 @@ use App\Http\Controllers\CheckoutController;
  */
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/signin', function(){return redirect('login');})->name('login');
-Route::view('search', 'search')->name('search'); //search page
+Route::view('search', 'pages.search')->name('search'); //search page
 
 Route::get('articles/{slug}', [BlogController::class, 'category'])->name('category.articles');
 Route::get('articles/{category}/{slug}', [BlogController::class, 'article'])->name('article.show');

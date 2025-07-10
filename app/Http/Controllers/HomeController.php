@@ -57,7 +57,7 @@ class HomeController extends Controller
     public function show_page(string $slug)
     {
         $page = Page::where('slug', $slug)->first();
-        return view('view-page', ['page' => $page]);
+        return view('pages.page', ['page' => $page]);
     }
 
     public function subscribe(Request $request)

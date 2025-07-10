@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="light">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <meta name="og:site_name" content="Annahdha">
-    <title>Subscribe to Printed Magazine - Annahda</title>
-    <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon">
+<x-public-layout>
 
-    <!-- Styles / Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="w-full">
-    <x-header />
-    
     <main class="w-full py-8">
         <div class="w-full p-8 container mx-auto">
             <h1 class="text-5xl font-bold text-center" dir="rtl">تقديم <span class="text-primary-500">النهضة+</span></h1>
@@ -82,6 +68,4 @@
         </div>
     </main>
 
-    <x-footer />
-</body>
-</html>
+</x-public-layout>

@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="light">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <meta name="og:site_name" content="Annahdha">
-    <title>Annahda Plus Membership</title>
-    <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon">
-
-    <!-- Styles / Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="w-full">
-    <x-header />
+<x-public-layout>
 
     <main class="w-full py-8">
         <div class="w-full p-8 container mx-auto">
@@ -187,6 +173,4 @@
         </div>
     </section>
 
-    <x-footer />
-</body>
-</html>
+</x-public-layout>

@@ -84,7 +84,7 @@
                         @foreach ($popular_articles as $article)
                         <li class="splide__slide">
                             <a href="{{route('article.show', ['category' => $article->category->slug, 'slug'=> $article->slug])}}" class=" w-full">
-                                <img src="{{ $article->thumbnail_url }}" alt="Background Image" class="w-unset h-full object-cover">
+                                <img src="{{ $article->thumbnail_url }}" alt="Background Image" class="w-full h-full object-cover">
                         
                                 <!-- Overlay -->
                                 <div class="p-4 lg:p-[5%] absolute inset-0 -mb-8 bg-gradient-to-t from-black to-transparent bg-opacity-50 flex flex-col justify-between">
@@ -122,10 +122,10 @@
                 <h1 class="font-extrabold text-3xl text-right" lang="ar">محتوى متميز</h1>
             </div>
 
-            <div class="w-full mt-8 text-right grid grid-cols-1 lg:grid-cols-3 gap-6" dir="rtl">
+            <div class="w-full mt-8 text-right grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" dir="rtl">
                 @foreach ($premium_articles as $article)
                 <a href="{{route('article.show', ['category' => $article->category->slug, 'slug'=> $article->slug])}}" class="flex flex-col items-center bg-white border-0 border-gray-200 shadow-sm hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                    <img class="object-cover w-full h-96 md:h-auto md:w-48 lg:w-auto" src="{{ $article->thumbnail_url }}" alt="">
+                    <img class="object-cover w-full" src="{{ $article->thumbnail_url }}" alt="">
                     <div class="w-full max-w-md flex flex-col justify-between py-6 px-6 leading-normal">
                         <h5 class="text-2xl font-bold tracking-tight text-black dark:text-white">{{$article->title}}</h5>
                         <p class="mt-6 font-normal text-gray-700 dark:text-gray-400">{{$article->category->name}} | {{ $article->author->name }}</p>
@@ -173,15 +173,15 @@
     @if ($popups)
     <!-- Modal Container -->
     <div id="popup-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-        <div class="bg-white rounded-lg shadow-lg w-4/5 max-w-4xl">
+        <div class="bg-white rounded-lg shadow-lg max-h-[90vh] overflow-y-hidden w-full max-w-3xl">
             <!-- Modal Header -->
             <div class="flex justify-end items-center p-4">
                 <button id="close-popup" class="text-gray-500 hover:text-gray-700">&times;</button>
             </div>
             <!-- Modal Content -->
-            <div class="p-6">
-                <a href="{{ $popups->redirect_url }}" target="_blank">
-                    <img src="{{ $popups->image_url }}" alt="Popup Image" class="w-full rounded-lg mb-4">
+            <div class="p-6 w-full h-full flex justify-center items-center">
+                <a @if ($popups->redirect_url)  href="{{ $popups->redirect_url }}" @endif target="_blank" class="w-fit">
+                    <img src="{{ $popups->image_url }}" alt="Popup Image" class="md:max-h-[80vh] rounded-lg mb-4">
                 </a>
             </div>
         </div>

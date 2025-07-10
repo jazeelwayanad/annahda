@@ -12,6 +12,7 @@ use TaffoVelikoff\ImageKitAdapter\ImagekitAdapter;
 use App\Models;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use Symfony\Component\Mailer\Bridge\Brevo\Transport\BrevoTransportFactory;
 use Symfony\Component\Mailer\Transport\Dsn;
 
@@ -65,6 +66,11 @@ class AppServiceProvider extends ServiceProvider
                 $view->with([
                     'footer_categories' => $categories,
                     'footer_pages' => $pages,
+                ]);
+            });
+            View::composer('components.sidebar', function ($view) use ($categories) {
+                $view->with([
+                    'header_categories' => $categories,
                 ]);
             });
         }

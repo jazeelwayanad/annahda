@@ -6,9 +6,9 @@
 
     @if (count($articles))
     <section dir="rtl" class="w-full mt-6 bg-white">
-        <div class="w-full grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div class="w-full px-4 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             @foreach($articles as $article)
-            <div class="w-full max-w-sm bg-white border border-gray-500 shadow-sm dark:bg-gray-800 dark:border-gray-700 group">
+            <div class="w-full ms:max-w-sm bg-white border border-gray-500 shadow-sm dark:bg-gray-800 dark:border-gray-700 group">
                 <a href="{{route('article.show', ['category' => $article->category->slug, 'slug'=> $article->slug])}}" class="w-full relative">
                     @if ($article->premium)
                     <div class="w-full flex justify-end absolute top-2 left-2">

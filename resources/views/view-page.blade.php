@@ -22,21 +22,7 @@
     <x-header />
     
     {{-- featured post --}}
-    <section class="w-full py-8 mt-6 bg-gradient-to-bl from-primary-50 to-white">
-        <div dir="rtl" class="w-full max-w-2xl mx-auto p-6 text-right article-content-font">
-            {{-- title --}}
-            <h2 class="text-xl lg:text-2xl xl:text-3xl font-bold article-heading-font" lang="ar">{{$page->title}}</h2>
-
-            <div class="w-full mt-6">
-                <img src="{{ env('IMAGEKIT_ENDPOINT') . '/' . $page->thumbnail }}" alt="{{$page->title}}" class="rounded-2xl">
-            </div>
-            
-            {{-- content --}}
-            <div class="mt-2 text-base lg:text-lg"  lang="ar">
-                {!! str($page->content)->sanitizeHtml() !!}
-            </div>
-        </div>
-    </section>
+    
 
     <x-footer />
 </body>

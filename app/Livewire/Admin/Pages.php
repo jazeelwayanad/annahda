@@ -25,14 +25,9 @@ class Pages extends Component implements HasForms, HasTable
         return $table
             ->query(Page::query()) 
             ->columns([
+                Columns\ImageColumn::make('thumbnail'),
                 Columns\TextColumn::make('title'),
                 Columns\TextColumn::make('slug'),
-                Columns\TextColumn::make('content'),
-                Columns\ImageColumn::make('thumbnail')->disk('s3'),
-                Columns\TextColumn::make('meta_title'),
-                Columns\TextColumn::make('meta_description'),
-                Columns\TextColumn::make('og_title'),
-                Columns\TextColumn::make('og_description'),
             ])
             ->headerActions([
                 Actions\CreateAction::make()
