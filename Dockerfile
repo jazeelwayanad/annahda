@@ -18,6 +18,9 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . .
 
+# Create the sqlite database file if using sqlite
+RUN touch /var/www/html/database/database.sqlite
+
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
