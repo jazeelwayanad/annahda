@@ -1,32 +1,39 @@
-# Use official PHP image with extensions
+# Build frontend assets
+FROM node:20-alpine AS assets
+WORKDIR /app
+COPY package*.json ./
+COPY vite.config.js tailwind.config.js postcss.config.js ./
+COPY resources ./resources
+RUN npm ci && npm run build
+
+# PHP runtime
 FROM php:8.3-fpm
 
-# Install system dependencies (including those needed for intl and zip)
+# System deps (incl. PostgreSQL)
 RUN apt-get update && apt-get install -y \
     libpng-dev libonig-dev libxml2-dev zip unzip curl git \
-    libzip-dev libicu-dev
+    libzip-dev libicu-dev libpq-dev \
+  && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions, including zip and intl
-RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip intl
+# PHP extensions (PostgreSQL instead of MySQL)
+RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd zip intl
 
-# Install Composer globally
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Set working directory
+# App
 WORKDIR /var/www/html
-
-# Copy project files
 COPY . .
 
-# Create the sqlite database file if using sqlite
-RUN touch /var/www/html/database/database.sqlite
+# Install PHP deps (production)
+RUN composer install --no-dev --prefer-dist --optimize-autoloader
 
-# Install dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Copy built assets
+COPY --from=assets /app/public/build /var/www/html/public/build
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Permissions
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Expose port 8000 and run Laravel's server by default
+# Serve Laravel (Render will route to this port)
 EXPOSE 8000
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
