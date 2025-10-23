@@ -15,7 +15,6 @@ if [ -n "${MYSQLHOST}" ]; then
   export DB_USERNAME="${MYSQLUSER}"
   export DB_PASSWORD="${MYSQLPASSWORD}"
 elif [ -n "${DB_HOST}" ] && { [ -z "${DB_CONNECTION}" ] || [ "${DB_CONNECTION}" = "sqlite" ]; }; then
-  # If DB_HOST is set by Railway Variables but DB_CONNECTION isn't, assume MySQL
   export DB_CONNECTION="mysql"
 fi
 
@@ -28,26 +27,8 @@ if [ "${DB_CONNECTION}" = "sqlite" ]; then
   echo "Using SQLite at ${DB_DATABASE}"
 fi
 
-# If DB is mysql but host is empty, warn (likely no variables linked)
-if [ "${DB_CONNECTION}" = "mysql" ] && [ -z "${DB_HOST}" ]; then
-  echo "WARNING: DB_CONNECTION=mysql but DB_HOST is empty. Did you link the MySQL service or set DB_*?"
-fi
-
-# If using MySQL, wait briefly for TCP reachability
-if [ "${DB_CONNECTION}" = "mysql" ] && [ -n "${DB_HOST}" ]; then
-  echo "Waiting for MySQL at ${DB_HOST}:${DB_PORT:-3306} ..."
-  php -r '
-    $h=getenv("DB_HOST"); $p=(int)(getenv("DB_PORT")?:3306);
-    for ($i=0; $i<60; $i++) {
-      $f=@fsockopen($h,$p,$e,$s,2);
-      if ($f) { fclose($f); echo "MySQL reachable\n"; exit(0); }
-      echo "retry...\n"; sleep(1);
-    }
-    echo "MySQL still unreachable after 60s\n"; exit(1);
-  ' || echo "Warning: proceeding without confirmed DB reachability."
-fi
-
-# Log effective DB settings (no password)
+# Log effective settings
+echo "PORT=${PORT}"
 echo "DB_CONNECTION=${DB_CONNECTION}"
 echo "DB_HOST=${DB_HOST}"
 echo "DB_PORT=${DB_PORT}"
@@ -65,7 +46,23 @@ if [ -z "${APP_KEY}" ]; then
   php artisan key:generate --force || true
 fi
 
-# Start migrations in background with more retries
+# Optionally wait a bit for DB TCP reachability (won't block server start)
+if [ "${DB_CONNECTION}" = "mysql" ] && [ -n "${DB_HOST}" ]; then
+  (
+    echo "Background: probing MySQL at ${DB_HOST}:${DB_PORT:-3306} ..."
+    php -r '
+      $h=getenv("DB_HOST"); $p=(int)(getenv("DB_PORT")?:3306);
+      for ($i=0; $i<30; $i++) {
+        $f=@fsockopen($h,$p,$e,$s,2);
+        if ($f) { fclose($f); echo "MySQL reachable\n"; exit(0); }
+        echo "retry...\n"; sleep(1);
+      }
+      echo "MySQL still unreachable after 30s\n";
+    ' || true
+  ) &
+fi
+
+# Start migrations in background with retries so server can bind to PORT quickly
 (
   max=30
   count=0
