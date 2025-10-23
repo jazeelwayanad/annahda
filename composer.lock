@@ -22,7 +22,7 @@
             },
             "require": {
                 "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0",
-                "php": "^7.4|^8.0"
+                "php": "^8.0|^8.1|^8.2"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.26",
@@ -11627,7 +11627,7 @@
             },
             "require": {
                 "ext-tokenizer": "*",
-                "php": "^7.4 || ^8.0"
+                "php": "^8.0 || ^8.1 || ^8.2"
             },
             "require-dev": {
                 "phpstan/extension-installer": "^1.4.3",
@@ -11812,7 +11812,7 @@
                 "ext-dom": "*",
                 "ext-tokenizer": "*",
                 "ext-xmlwriter": "*",
-                "php": "^7.2 || ^8.0"
+                "php": "^8.0 || ^8.1 || ^8.2"
             },
             "type": "library",
             "autoload": {
