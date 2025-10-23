@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -e
 
-# Optional: create .env on first boot so other settings exist
+# Create .env on first boot if not present so ${MYSQL*} mappings work
 if [ ! -f .env ] && [ -f .env.example ]; then
   cp .env.example .env
 fi
@@ -15,9 +15,6 @@ if [ -n "${MYSQLHOST}" ]; then
   [ -z "${DB_USERNAME}" ] && export DB_USERNAME="${MYSQLUSER}"
   [ -z "${DB_PASSWORD}" ] && export DB_PASSWORD="${MYSQLPASSWORD}"
 fi
-
-# If APP_KEY isn't in the environment or .env, you can generate one (uncomment if needed)
-# php artisan key:generate --force || true
 
 # Clear any stale caches (prevents fallback to sqlite)
 php artisan package:discover --ansi || true
