@@ -1,32 +1,32 @@
-# Nixpacks config for a Laravel app without Docker.
-# Uses PHP 8.3 and installs required extensions.
+# Nixpacks configuration for Laravel on PHP 8.3 with required extensions.
+# Nixpacks will detect PHP via composer.json and run Composer automatically,
+# but we add explicit packages and a start command to be safe.
 
+# Use Nix packages for PHP 8.3 + extensions and Composer
 [phases.setup]
-# Install PHP 8.3, Composer, and needed PHP extensions.
-# Note: extension names follow nixpkgs; adjust if your build log suggests a different name.
 nixPkgs = [
   "php83",
-  "php83Packages.composer",
   "php83Extensions.intl",
   "php83Extensions.pdo_mysql",
-  "php83Extensions.zip"
+  "php83Extensions.zip",
+  "composer"
 ]
 
+# Ensure a production-ready vendor install
 [phases.install]
-# Install PHP dependencies
 cmds = [
   "composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader"
 ]
 
+# Optional: clear caches to avoid stale config between deploys
 [phases.build]
-# Optional: compile caches for performance; these do not require DB
 cmds = [
-  "php artisan package:discover --ansi || true",
-  "php artisan config:cache || true",
-  "php artisan route:cache || true",
-  "php artisan view:cache || true"
+  "php artisan package:discover || true",
+  "php artisan config:clear || true",
+  "php artisan route:clear || true",
+  "php artisan view:clear || true"
 ]
 
+# Start the HTTP server bound to the platform port
 [start]
-# Bind to Railway’s assigned port
-cmd = "php artisan serve --host=0.0.0.0 --port=${PORT:-8000}"
+cmd = "php artisan serve --host=0.0.0.0 --port=${PORT}"
