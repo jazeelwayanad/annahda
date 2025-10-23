@@ -3,6 +3,10 @@
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+Route::get('/health', function () {
+    return response('OK', 200);
+});
+
 use App\Livewire\Admin;
 use App\Http\Middleware;
 use App\Http\Controllers\App;
