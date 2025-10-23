@@ -6,7 +6,7 @@ if [ ! -f .env ] && [ -f .env.example ]; then
   cp .env.example .env
 fi
 
-# Always map Railway's MYSQL* envs to Laravel's DB_* envs (override any .env placeholders)
+# Prefer Railway's injected MySQL env; otherwise respect DB_* if provided in Railway.
 if [ -n "${MYSQLHOST}" ]; then
   export DB_CONNECTION="mysql"
   export DB_HOST="${MYSQLHOST}"
@@ -14,6 +14,18 @@ if [ -n "${MYSQLHOST}" ]; then
   export DB_DATABASE="${MYSQLDATABASE}"
   export DB_USERNAME="${MYSQLUSER}"
   export DB_PASSWORD="${MYSQLPASSWORD}"
+elif [ -n "${DB_HOST}" ] && { [ -z "${DB_CONNECTION}" ] || [ "${DB_CONNECTION}" = "sqlite" ]; }; then
+  # If DB_HOST is set by Railway Variables but DB_CONNECTION isn't, assume MySQL
+  export DB_CONNECTION="mysql"
+fi
+
+# Only handle sqlite if explicitly selected
+if [ "${DB_CONNECTION}" = "sqlite" ]; then
+  DB_PATH="${DB_DATABASE:-/var/www/html/database/database.sqlite}"
+  export DB_DATABASE="${DB_PATH}"
+  mkdir -p "$(dirname "$DB_PATH")"
+  [ -f "$DB_PATH" ] || touch "$DB_PATH"
+  echo "Using SQLite at ${DB_DATABASE}"
 fi
 
 # Log effective DB settings (no password)
