@@ -1,46 +1,27 @@
+FROM php:8.2-fpm
 
-FROM php:8.2-cli
-
-#install system dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
-git \
-curl \
-unzip \
-zip \
-libpng-dev \
-libonig-dev \
-libxml2-dev \
-libzip-dev \
-libsodium-dev \
-libpq-dev \
-default-mysql-client \
-default-libmysqlclient-dev \
-libfreetype6-dev \
-libjpeg62-turbo-dev \
-&& docker-php-ext-configure gd --with-freetype --with-jpeg \
-&& docker-php-ext-install pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd zip sodium
+    git curl unzip zip \
+    libpng-dev libonig-dev libxml2-dev libzip-dev libsodium-dev \
+    libpq-dev default-mysql-client libfreetype6-dev libjpeg62-turbo-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd zip sodium
 
-#Get Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-#Install Node.js and npm
+# Install Node.js 18
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
 
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash && \
-    apt-get update && apt-get install -y nodejs
-
-#Set working directory
 WORKDIR /var/www/html
-
-#Copy application files
 COPY . .
 
-#Expose port used by php artisan serve
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+RUN npm ci && npm run build
+
 EXPOSE 8000
 
-#Install PHP and 35 dependencies
-
-RUN composer install
-RUN npm install
-
-#Run Laravel migrations and start server
+# Laravel-specific commands
 CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
