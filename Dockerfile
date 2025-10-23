@@ -62,9 +62,13 @@ COPY --from=deps /var/www/html/vendor ./vendor
 # Copy built assets
 COPY --from=assets /app/public/build ./public/build
 
+# Startup script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
 # Laravel permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 EXPOSE 8000
-# Bind to Railway's assigned PORT
-CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
+# Bind to Railway's assigned PORT and run pre-start tasks
+CMD ["bash", "/start.sh"]
