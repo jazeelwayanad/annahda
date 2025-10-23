@@ -28,6 +28,11 @@ if [ "${DB_CONNECTION}" = "sqlite" ]; then
   echo "Using SQLite at ${DB_DATABASE}"
 fi
 
+# If DB is mysql but host is empty, warn (likely no variables linked)
+if [ "${DB_CONNECTION}" = "mysql" ] && [ -z "${DB_HOST}" ]; then
+  echo "WARNING: DB_CONNECTION=mysql but DB_HOST is empty. Did you link the MySQL service or set DB_*?"
+fi
+
 # If using MySQL, wait briefly for TCP reachability
 if [ "${DB_CONNECTION}" = "mysql" ] && [ -n "${DB_HOST}" ]; then
   echo "Waiting for MySQL at ${DB_HOST}:${DB_PORT:-3306} ..."
@@ -60,9 +65,9 @@ if [ -z "${APP_KEY}" ]; then
   php artisan key:generate --force || true
 fi
 
-# Start migrations in background with retries
+# Start migrations in background with more retries
 (
-  max=10
+  max=30
   count=0
   until php artisan migrate --force; do
     count=$((count+1))
