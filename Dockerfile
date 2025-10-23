@@ -1,6 +1,6 @@
 FROM php:8.3-fpm
 
-# Install system dependencies
+# Install dependencies
 RUN apt-get update && apt-get install -y \
     git curl unzip zip \
     libpng-dev libonig-dev libxml2-dev libzip-dev libsodium-dev libicu-dev \
@@ -8,22 +8,17 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install intl pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd zip sodium fileinfo
 
-
 # Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-
-# Install Node.js 18
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 COPY . .
 
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+# 🚀 Install PHP dependencies (skip scripts to avoid DB error)
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts
+
+# 🚀 Build frontend
 RUN npm ci && npm run build
 
 EXPOSE 8000
-
-# Laravel-specific commands
 CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
