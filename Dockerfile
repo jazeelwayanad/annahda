@@ -24,7 +24,8 @@ libjpeg62-turbo-dev \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 #Install Node.js and npm
-curl -sL https://deb.nodesource.com/setup_18.x | bash -
+
+curl -sL https://deb.nodesource.com/setup_18.x | bash && \
 apt-get update && apt-get install -y nodejs
 
 #Set working directory
@@ -37,7 +38,8 @@ COPY . .
 EXPOSE 8000
 
 #Install PHP and 35 dependencies
-composer install
+
+RUN composer install
 RUN npm install
 
 #Run Laravel migrations and start server
