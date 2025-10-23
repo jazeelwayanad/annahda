@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="og:site_name" content="Annahdha">
+    <title>Annahda</title>
+    <meta name="og:title" content="Annahdha">
+    <meta name="og:description" content="Annahdha">
+    <meta name="description" content="Annahdha">
+    <meta name="robots" content="index, follow" />
+    <meta name="og:type" content="website" />
+    <meta name="og:url" content="{{ env('APP_URL') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
+    <!-- Styles / Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
+</head>
+<body class="font-sans antialiased dark:bg-black dark:text-white/50">
+    <div class="w-full max-w-7xl mx-auto">
+        <x-sidebar />
+        <x-header />
+
+        <div class="w-full py-4">
+            {{ $slot }}
+        </div>
+
+        <x-footer />
+    </div>
+
+    @stack('scripts')
+    <script type="module">
+        $(document).ready(function(){
+            $('#public-mobile-menu-open').on('click', function(){
+                $('#public-mobile-menu').addClass('translate-x-0');
+                $('#public-mobile-menu').removeClass('translate-x-full');
+            });
+            $('#public-mobile-menu-close').on('click', function(){
+                $('#public-mobile-menu').addClass('translate-x-full');
+                $('#public-mobile-menu').removeClass('translate-x-0');
+            });
+            $(document).click(function(event) {
+                if (!$(event.target).closest('#public-mobile-menu-open, #public-mobile-menu').length) {
+                    $('#public-mobile-menu').addClass('translate-x-full');
+                    $('#public-mobile-menu').removeClass('translate-x-0');
+                }
+            });
+        })
+    </script>
+</body>
+</html>
