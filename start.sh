@@ -1,18 +1,31 @@
 #!/usr/bin/env sh
 set -e
 
-# Create .env on first boot if not present so ${MYSQL*} expansion works
+# Optional: create .env on first boot so other settings exist
 if [ ! -f .env ] && [ -f .env.example ]; then
   cp .env.example .env
 fi
 
-# Clear any stale caches that might still point to sqlite
+# Map Railway's MYSQL* envs to Laravel's DB_* envs if DB_* are not already set
+if [ -n "${MYSQLHOST}" ]; then
+  [ -z "${DB_CONNECTION}" ] && export DB_CONNECTION="mysql"
+  [ -z "${DB_HOST}" ] && export DB_HOST="${MYSQLHOST}"
+  [ -z "${DB_PORT}" ] && export DB_PORT="${MYSQLPORT:-3306}"
+  [ -z "${DB_DATABASE}" ] && export DB_DATABASE="${MYSQLDATABASE}"
+  [ -z "${DB_USERNAME}" ] && export DB_USERNAME="${MYSQLUSER}"
+  [ -z "${DB_PASSWORD}" ] && export DB_PASSWORD="${MYSQLPASSWORD}"
+fi
+
+# If APP_KEY isn't in the environment or .env, you can generate one (uncomment if needed)
+# php artisan key:generate --force || true
+
+# Clear any stale caches (prevents fallback to sqlite)
 php artisan package:discover --ansi || true
 php artisan config:clear || true
 php artisan route:clear || true
 php artisan view:clear || true
 
-# Run migrations with retries (DB may not be ready immediately)
+# Run migrations with retries (DB may not be immediately available)
 max=10
 count=0
 until php artisan migrate --force; do
@@ -25,7 +38,6 @@ until php artisan migrate --force; do
   sleep 5
 done
 
-# Optional but safe to repeat
 php artisan storage:link || true
 
 # Cache for performance
@@ -33,5 +45,5 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-# Start the server on Railway's PORT
+# Serve on Railway's assigned PORT
 exec php artisan serve --host=0.0.0.0 --port="${PORT:-8000}"
