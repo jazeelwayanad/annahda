@@ -25,8 +25,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 #Install Node.js and npm
 
-curl -sL https://deb.nodesource.com/setup_18.x | bash && \
-apt-get update && apt-get install -y nodejs
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash && \
+    apt-get update && apt-get install -y nodejs
 
 #Set working directory
 WORKDIR /var/www/html
