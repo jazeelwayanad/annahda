@@ -1,16 +1,16 @@
 # 1) Dependencies stage: install PHP extensions and Composer deps (without scripts)
 FROM php:8.3-fpm AS deps
 
-# System packages (incl. PostgreSQL client libs and GD deps)
+# System packages (GD, ICU, Zip, etc.)
 RUN apt-get update && apt-get install -y \
     libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
     libonig-dev libxml2-dev zip unzip curl git \
-    libzip-dev libicu-dev libpq-dev \
+    libzip-dev libicu-dev \
   && rm -rf /var/lib/apt/lists/*
 
-# PHP extensions (PostgreSQL + GD configured with JPEG/Freetype)
+# PHP extensions (MySQL + GD configured with JPEG/Freetype)
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
- && docker-php-ext-install gd pdo_pgsql mbstring exif pcntl bcmath zip intl
+ && docker-php-ext-install gd pdo_mysql mbstring exif pcntl bcmath zip intl
 
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -21,7 +21,7 @@ WORKDIR /var/www/html
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --prefer-dist --no-interaction --no-progress --no-scripts
 
-# 2) Assets stage: build Vite/Tailwind with vendor present (Filament preset needs it)
+# 2) Assets stage: build Vite/Tailwind with vendor present
 FROM node:20-alpine AS assets
 WORKDIR /app
 
@@ -42,11 +42,11 @@ FROM php:8.3-fpm
 RUN apt-get update && apt-get install -y \
     libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
     libonig-dev libxml2-dev zip unzip curl git \
-    libzip-dev libicu-dev libpq-dev \
+    libzip-dev libicu-dev \
   && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
- && docker-php-ext-install gd pdo_pgsql mbstring exif pcntl bcmath zip intl
+ && docker-php-ext-install gd pdo_mysql mbstring exif pcntl bcmath zip intl
 
 # Composer (handy for artisan tasks at runtime)
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -66,5 +66,5 @@ COPY --from=assets /app/public/build ./public/build
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 EXPOSE 8000
-# Use shell-form so PORT is expanded by /bin/sh
+# Bind to Railway's assigned PORT
 CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
