@@ -30,7 +30,7 @@ RUN npm ci
 
 COPY vite.config.js tailwind.config.js postcss.config.js ./
 COPY resources ./resources
-# Bring in PHP vendor so Tailwind can resolve vendor/filament preset
+# Bring in PHP vendor so Tailwind/Filament presets resolve
 COPY --from=deps /var/www/html/vendor ./vendor
 
 RUN npm run build
@@ -70,5 +70,5 @@ RUN chmod +x /start.sh
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 EXPOSE 8000
-# Bind to Railway's assigned PORT and run pre-start tasks
+# Run pre-start tasks and bind to Railway's PORT
 CMD ["bash", "/start.sh"]
