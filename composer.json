@@ -6,9 +6,9 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
   "require": {
-    "php": "^8.3",           // change from ^8.2 to ^8.3 (recommended)
-    "ext-intl": "*",         // add this
-    "ext-zip": "*",          // add this
+    "php": "^8.3",         
+    "ext-intl": "*",        
+    "ext-zip": "*",         
         "filament/tables": "^3.2",
         "laravel/framework": "^11.31",
         "laravel/sanctum": "^4.0",
