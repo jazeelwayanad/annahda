@@ -6,7 +6,9 @@ RUN apt-get update && apt-get install -y \
     libpng-dev libonig-dev libxml2-dev libzip-dev libsodium-dev \
     libpq-dev default-mysql-client libfreetype6-dev libjpeg62-turbo-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd zip sodium
+    && docker-php-ext-install pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd zip sodium \
+    && docker-php-ext-install fileinfo \
+    && composer update 
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -18,7 +20,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 WORKDIR /var/www/html
 COPY . .
 
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+RUN composer clear-cache \
+ && composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
 RUN npm ci && npm run build
 
 EXPOSE 8000
