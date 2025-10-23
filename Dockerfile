@@ -7,8 +7,7 @@ RUN apt-get update && apt-get install -y \
     libpq-dev default-mysql-client libfreetype6-dev libjpeg62-turbo-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd zip sodium \
-    && docker-php-ext-install fileinfo \
-    && composer update 
+    && docker-php-ext-install fileinfo 
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -20,7 +19,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 WORKDIR /var/www/html
 COPY . .
 
-RUN composer clear-cache \
+RUN composer update \
  && composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
 RUN npm ci && npm run build
 
