@@ -28,6 +28,20 @@ if [ "${DB_CONNECTION}" = "sqlite" ]; then
   echo "Using SQLite at ${DB_DATABASE}"
 fi
 
+# If using MySQL, wait briefly for TCP reachability
+if [ "${DB_CONNECTION}" = "mysql" ] && [ -n "${DB_HOST}" ]; then
+  echo "Waiting for MySQL at ${DB_HOST}:${DB_PORT:-3306} ..."
+  php -r '
+    $h=getenv("DB_HOST"); $p=(int)(getenv("DB_PORT")?:3306);
+    for ($i=0; $i<60; $i++) {
+      $f=@fsockopen($h,$p,$e,$s,2);
+      if ($f) { fclose($f); echo "MySQL reachable\n"; exit(0); }
+      echo "retry...\n"; sleep(1);
+    }
+    echo "MySQL still unreachable after 60s\n"; exit(1);
+  ' || echo "Warning: proceeding without confirmed DB reachability."
+fi
+
 # Log effective DB settings (no password)
 echo "DB_CONNECTION=${DB_CONNECTION}"
 echo "DB_HOST=${DB_HOST}"
@@ -46,7 +60,7 @@ if [ -z "${APP_KEY}" ]; then
   php artisan key:generate --force || true
 fi
 
-# Start migrations in background with retries so the server can bind to PORT quickly
+# Start migrations in background with retries
 (
   max=10
   count=0
