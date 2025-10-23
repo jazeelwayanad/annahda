@@ -19,8 +19,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 WORKDIR /var/www/html
 COPY . .
 
-RUN composer update \
- && composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
 RUN npm ci && npm run build
 
 EXPOSE 8000
