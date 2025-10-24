@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 
 # Install Node.js (for Vite build)
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash && \
-    apt-get update && apt-get install -y nodejs 
+    apt-get update && apt-get install -y nodejs
 
 # Copy composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -23,20 +23,20 @@ WORKDIR /var/www/html
 COPY package*.json ./
 RUN npm ci
 
-# Copy app files
+# Copy the rest of the application
 COPY . .
 
 # Install PHP dependencies
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts
 
-# Build frontend assets
+# Build Vite frontend assets
 RUN npm run build
 
-# Debug build folder
+# ✅ Confirm build folder
 RUN echo "=== Checking built files ===" && ls -la public/build || echo "⚠️ No build folder found!"
 
 # Expose port
 EXPOSE 8080
 
-# ✅ Serve Laravel directly from project root
+# ✅ Serve from /public folder (static assets + Laravel routes)
 CMD php -S 0.0.0.0:${PORT:-8080} -t public public/index.php
