@@ -19,24 +19,25 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
-# Install Node deps first for better layer caching
+# Install Node deps first for better caching
 COPY package*.json ./
 RUN npm ci
 
-# Copy application files
+# Copy app files
 COPY . .
 
 # Install PHP dependencies
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts
 
-# ✅ Build Vite assets (this was missing)
+# Build frontend assets
 RUN npm run build
 
-# 👀 Debug: Show what got built (just for confirmation)
+# Debug build folder
 RUN echo "=== Checking built files ===" && ls -la public/build || echo "⚠️ No build folder found!"
 
 # Expose port
 EXPOSE 8080
 
-# Start Laravel app
-CMD php artisan migrate --force && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
+# ✅ Serve from public directory so CSS/JS load correctly
+WORKDIR /var/www/html/public
+CMD php -S 0.0.0.0:${PORT:-8080} index.php
