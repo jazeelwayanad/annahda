@@ -9,13 +9,12 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install intl pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd zip sodium fileinfo
 
-# ✅ Install Node.js + npm (LTS version 18)
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g npm@latest
-
 # Copy Composer from the official image
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# ✅ Install Node.js + npm (LTS version 18)
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash && \
+    apt-get update && apt-get install -y nodejs 
 
 # Set working directory
 WORKDIR /var/www/html
