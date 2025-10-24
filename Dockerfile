@@ -36,9 +36,11 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 # Supervisor manages both PHP and Nginx
 COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Clean cache
-RUN php artisan config:clear && php artisan route:clear && php artisan view:clear
-
+# (Remove the Artisan commands from build phase)
 EXPOSE 8080
 
-CMD ["/usr/bin/supervisord"]
+# Run Artisan commands safely at container start
+CMD php artisan config:clear && \
+    php artisan route:clear && \
+    php artisan view:clear && \
+    /usr/bin/supervisord
