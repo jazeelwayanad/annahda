@@ -29,17 +29,10 @@ COPY package.json package-lock.json* ./
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev --no-scripts
 RUN npm install
 
-# Copy application code
+# Copy application code (including your .env with APP_KEY already set)
 COPY . .
 
-# Set up Laravel
-RUN cp .env.example .env || echo "APP_ENV=production" > .env
-RUN php artisan key:generate --ansi
-RUN php artisan config:cache
-RUN php artisan route:cache
-RUN php artisan view:cache
-
-# Build Vite assets
+# Build Vite assets (doesn't need database)
 RUN npm run build
 
 # Set permissions
@@ -53,5 +46,5 @@ RUN ls -la public/build || echo "⚠️ Build folder not found!"
 # Expose port
 EXPOSE 8080
 
-# Start PHP built-in server
+# Start server (Laravel will use your existing .env)
 CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
