@@ -15,14 +15,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 🧑‍💼 Create Super Admin
-        $super_admin = User::create([
-            'type' => 'admin',
-            'name' => 'Humblar Technologies',
-            'email' => 'admin@humblar.in',
-            // Make sure passwords are hashed — Laravel won’t auto-hash this!
-            'password' => bcrypt('@Password'),
-        ]);
+        // 🧑‍💼 Create Super Admin (only if not exists)
+        $super_admin = User::firstOrCreate(
+            ['email' => 'admin@humblar.in'],
+            [
+                'type' => 'admin',
+                'name' => 'Humblar Technologies',
+                'password' => bcrypt('@Password'),
+            ]
+        );
 
         // 🧩 Seed other base data first
         $this->call([
@@ -33,10 +34,10 @@ class DatabaseSeeder extends Seeder
 
         $super_admin->assignRole('super-admin');
 
-        // 🗂️ Create multiple categories instead of one
+        // 🗂️ Create categories
         $categories = Category::factory()->count(5)->create();
 
-        // 📰 Create articles safely — assign valid category IDs dynamically
+        // 📰 Create articles safely
         Article::factory()->count(20)->create([
             'category_id' => $categories->random()->id,
             'user_id' => $super_admin->id,
