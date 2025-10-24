@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
 # Install Node.js (for Vite build)
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash && \
     apt-get update && apt-get install -y nodejs 
-    
+
 # Copy composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -29,7 +29,7 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-s
 RUN npm ci && npm run build
 
 # Expose port
-EXPOSE 8000
+EXPOSE 8080
 
 # Start Laravel app
-CMD php artisan migrate --force && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
+CMD php artisan migrate --force && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
