@@ -1,9 +1,9 @@
-# Use official PHP image
-FROM php:8.3-fpm
+# ---------- Base Stage ----------
+FROM php:8.3-fpm AS base
 
-# Install system dependencies
+# Install PHP extensions & system dependencies
 RUN apt-get update && apt-get install -y \
-    git curl unzip zip \
+    git curl unzip zip nginx supervisor \
     libpng-dev libonig-dev libxml2-dev libzip-dev libsodium-dev libicu-dev \
     libpq-dev default-mysql-client libfreetype6-dev libjpeg62-turbo-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
@@ -13,31 +13,32 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash && \
     apt-get update && apt-get install -y nodejs
 
-# Copy composer
+# Copy composer binary
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Set working directory
+# ---------- Build Stage ----------
 WORKDIR /var/www/html
 
-# Install Node deps first for better caching
+# Copy dependencies first for caching
 COPY package*.json ./
 RUN npm ci
 
-# Copy the rest of the application
 COPY . .
 
-# Install PHP dependencies
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts
 
-# Build Vite frontend assets
+# Build frontend
 RUN npm run build
 
-# ✅ Confirm build folder
-RUN echo "=== Checking built files ===" && ls -la public/build || echo "⚠️ No build folder found!"
+# ---------- Configure Nginx + PHP-FPM ----------
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
-# Expose port
+# Supervisor manages both PHP and Nginx
+COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Clean cache
+RUN php artisan config:clear && php artisan route:clear && php artisan view:clear
+
 EXPOSE 8080
 
-# ✅ Serve from /public folder (static assets + Laravel routes)
-# CMD php -S 0.0.0.0:${PORT:-8080} -t public public/index.php
-CMD echo "=== Listing public/ folder ===" && ls -la public && echo "=== Listing public/build ===" && ls -la public/build && echo "=== Starting PHP ===" && php -S 0.0.0.0:${PORT:-8080} -t public public/index.php
+CMD ["/usr/bin/supervisord"]
