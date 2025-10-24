@@ -32,4 +32,7 @@ RUN npm ci && npm run build
 EXPOSE 8000
 
 # Run migrations and start Laravel dev server
-CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
+# CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
+COPY docker-entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+CMD ["/usr/local/bin/entrypoint.sh"]
