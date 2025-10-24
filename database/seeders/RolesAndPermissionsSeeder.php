@@ -2,43 +2,45 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         // Reset cached roles and permissions
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // create permissions
-        Permission::create(['name' => 'manage permissions']);
-        Permission::create(['name' => 'manage roles']);
-        Permission::create(['name' => 'manage admins']);
-        Permission::create(['name' => 'manage categories']);
-        Permission::create(['name' => 'manage tags']);
-        Permission::create(['name' => 'manage journal']);
-        Permission::create(['name' => 'view articles']);
-        Permission::create(['name' => 'create articles']);
-        Permission::create(['name' => 'edit articles']);
-        Permission::create(['name' => 'delete articles']);
-        Permission::create(['name' => 'manage users']);
+        $permissions = [
+            'manage permissions',
+            'manage roles',
+            'manage admins',
+            'manage categories',
+            'manage tags',
+            'manage journal',
+            'view articles',
+            'create articles',
+            'edit articles',
+            'delete articles',
+            'manage users',
+        ];
 
-        // update cache to know about the newly created permissions
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        // Create permissions only if missing
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission, 'guard_name' => 'web']);
+        }
 
-        // create roles
-        $superadmin = Role::create(['name' => 'super-admin']);
-        $developer = Role::create(['name' => 'developer']);
+        // Create roles safely
+        $superadmin = Role::firstOrCreate(['name' => 'super-admin', 'guard_name' => 'web']);
+        $developer = Role::firstOrCreate(['name' => 'developer', 'guard_name' => 'web']);
 
-        // give permissions to all roles
-        $superadmin->givePermissionTo(Permission::all());
-        $developer->givePermissionTo(Permission::all());
+        // Give all permissions to both roles
+        $superadmin->syncPermissions(Permission::all());
+        $developer->syncPermissions(Permission::all());
+
+        $this->command->info('✅ Roles & Permissions seeded successfully.');
     }
 }

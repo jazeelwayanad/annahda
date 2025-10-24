@@ -10,12 +10,9 @@ use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database safely.
-     */
     public function run(): void
     {
-        // 🧑‍💼 Create or update super admin
+        // 🧑‍💼 Create or update super admin safely
         $super_admin = User::updateOrCreate(
             ['email' => 'admin@humblar.in'],
             [
@@ -25,7 +22,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 🧩 Run dependent seeders safely
+        // 🧩 Run base seeders
         $this->call([
             RolesAndPermissionsSeeder::class,
             PageSeeder::class,
@@ -37,16 +34,16 @@ class DatabaseSeeder extends Seeder
             $super_admin->assignRole('super-admin');
         }
 
-        // 🗂️ Seed categories only if table is empty
+        // 🗂️ Seed categories only if none exist
         if (Category::count() === 0) {
             $categories = Category::factory()->count(5)->create();
             $this->command->info('✅ Categories seeded successfully.');
         } else {
             $categories = Category::all();
-            $this->command->warn('⚠️ Categories already exist — skipping creation.');
+            $this->command->warn('⚠️ Categories already exist — skipping.');
         }
 
-        // 📰 Seed articles safely
+        // 📰 Seed articles only if none exist
         if (Article::count() === 0) {
             Article::factory()->count(20)->create([
                 'category_id' => $categories->random()->id,
@@ -54,7 +51,7 @@ class DatabaseSeeder extends Seeder
             ]);
             $this->command->info('✅ Articles seeded successfully.');
         } else {
-            $this->command->warn('⚠️ Articles already exist — skipping creation.');
+            $this->command->warn('⚠️ Articles already exist — skipping.');
         }
     }
 }
