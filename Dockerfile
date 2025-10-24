@@ -36,9 +36,9 @@ COPY . .
 RUN npm run build
 
 # Set permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage \
-    && chmod -R 755 /var/www/html/bootstrap/cache
+# RUN chown -R www-data:www-data /var/www/html \
+#     && chmod -R 755 /var/www/html/storage \
+#     && chmod -R 755 /var/www/html/bootstrap/cache
 
 # Verify build output
 RUN ls -la public/build || echo "⚠️ Build folder not found!"
