@@ -11,12 +11,12 @@ use Illuminate\Support\Str;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Seed the application's database safely.
      */
     public function run(): void
     {
-        // 🧑‍💼 Create Super Admin (only if not exists)
-        $super_admin = User::firstOrCreate(
+        // 🧑‍💼 Create or update super admin
+        $super_admin = User::updateOrCreate(
             ['email' => 'admin@humblar.in'],
             [
                 'type' => 'admin',
@@ -25,22 +25,36 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 🧩 Seed other base data first
+        // 🧩 Run dependent seeders safely
         $this->call([
             RolesAndPermissionsSeeder::class,
             PageSeeder::class,
             PlanSeeder::class,
         ]);
 
-        $super_admin->assignRole('super-admin');
+        // Assign role safely
+        if (! $super_admin->hasRole('super-admin')) {
+            $super_admin->assignRole('super-admin');
+        }
 
-        // 🗂️ Create categories
-        $categories = Category::factory()->count(5)->create();
+        // 🗂️ Seed categories only if table is empty
+        if (Category::count() === 0) {
+            $categories = Category::factory()->count(5)->create();
+            $this->command->info('✅ Categories seeded successfully.');
+        } else {
+            $categories = Category::all();
+            $this->command->warn('⚠️ Categories already exist — skipping creation.');
+        }
 
-        // 📰 Create articles safely
-        Article::factory()->count(20)->create([
-            'category_id' => $categories->random()->id,
-            'user_id' => $super_admin->id,
-        ]);
+        // 📰 Seed articles safely
+        if (Article::count() === 0) {
+            Article::factory()->count(20)->create([
+                'category_id' => $categories->random()->id,
+                'user_id' => $super_admin->id,
+            ]);
+            $this->command->info('✅ Articles seeded successfully.');
+        } else {
+            $this->command->warn('⚠️ Articles already exist — skipping creation.');
+        }
     }
 }
