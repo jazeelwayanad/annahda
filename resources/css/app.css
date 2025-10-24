@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@160..700&display=swap');
+/* stylelint-disable at-rule-no-unknown */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 @tailwind variants;
+/* stylelint-enable at-rule-no-unknown */
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Readex Pro', serif !important;
