@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\Mailer\Bridge\Brevo\Transport\BrevoTransportFactory;
 use Symfony\Component\Mailer\Transport\Dsn;
+use Illuminate\Support\Facades\URL; // ✅ Add this line
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -52,8 +53,12 @@ class AppServiceProvider extends ServiceProvider
             return $user->hasAnyRole(['super-admin','developer']) ? true : null;
         });
 
-        
-        if(Schema::hasTable('categories') && Schema::hasTable('pages')) {
+        // ✅ Force HTTPS in production
+        if (config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
+
+        if (Schema::hasTable('categories') && Schema::hasTable('pages')) {
             $categories = Models\Category::all();
             $pages = Models\Page::all(); 
 
@@ -62,12 +67,14 @@ class AppServiceProvider extends ServiceProvider
                     'header_categories' => $categories,
                 ]);
             });
+
             view()->composer('components.footer', function ($view) use ($categories, $pages) {
                 $view->with([
                     'footer_categories' => $categories,
                     'footer_pages' => $pages,
                 ]);
             });
+
             View::composer('components.sidebar', function ($view) use ($categories) {
                 $view->with([
                     'header_categories' => $categories,
