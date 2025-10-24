@@ -38,6 +38,5 @@ RUN echo "=== Checking built files ===" && ls -la public/build || echo "⚠️ N
 # Expose port
 EXPOSE 8080
 
-# ✅ Serve from public directory so CSS/JS load correctly
-WORKDIR /var/www/html/public
-CMD php -S 0.0.0.0:${PORT:-8080} index.php
+# ✅ Serve Laravel directly from project root
+CMD php -S 0.0.0.0:${PORT:-8080} -t public public/index.php
