@@ -30,7 +30,7 @@
                 <img class="w-10 h-10 rounded-full object-cover" src="{{env('IMAGEKIT_ENDPOINT') . '/' . auth()->user()->profile}}" alt="user photo">
                 @else
                 <div class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-slate-300 rounded-full">
-                    <span class="text-base font-bold text-gray-600">{{ substr(auth()->user()->name, 0, 1); }}</span>
+                    <span class="text-base font-bold text-gray-600">{{ substr(auth()->user()->name, 0, 1) }}</span>
                 </div>
                 @endif
             </button>

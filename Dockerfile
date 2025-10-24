@@ -1,7 +1,7 @@
-# Use PHP 8.3 with FPM
+# Use official PHP image
 FROM php:8.3-fpm
 
-# Install system dependencies and PHP extensions
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git curl unzip zip \
     libpng-dev libonig-dev libxml2-dev libzip-dev libsodium-dev libicu-dev \
@@ -9,12 +9,12 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install intl pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd zip sodium fileinfo
 
-# Copy Composer from the official image
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# ✅ Install Node.js + npm (LTS version 18)
+# Install Node.js (for Vite build)
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash && \
     apt-get update && apt-get install -y nodejs 
+    
+# Copy composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Set working directory
 WORKDIR /var/www/html
@@ -22,17 +22,14 @@ WORKDIR /var/www/html
 # Copy application files
 COPY . .
 
-# Install PHP dependencies (skip scripts to avoid DB connection errors)
+# Install PHP dependencies
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts
 
-# Install and build frontend assets
+# ✅ Build Vite assets (this was missing)
 RUN npm ci && npm run build
 
-# Expose Laravel serve port
+# Expose port
 EXPOSE 8000
 
-# Run migrations and start Laravel dev server
-# CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
-COPY docker-entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
-CMD ["/usr/local/bin/entrypoint.sh"]
+# Start Laravel app
+CMD php artisan migrate --force && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
