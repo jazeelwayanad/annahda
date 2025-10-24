@@ -7,11 +7,13 @@ RUN apt-get update && apt-get install -y \
     libpng-dev libonig-dev libxml2-dev libzip-dev libsodium-dev libicu-dev \
     libpq-dev default-mysql-client libfreetype6-dev libjpeg62-turbo-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install intl pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd zip sodium fileinfo
+    && docker-php-ext-install intl pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd zip sodium fileinfo \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install Node.js (for Vite build)
+# Install Node.js 18
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash && \
-    apt-get update && apt-get install -y nodejs
+    apt-get update && apt-get install -y nodejs && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -19,24 +21,37 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
-# Install Node deps first for better caching
-COPY package*.json ./
-RUN npm ci
+# Copy dependency files first (better caching)
+COPY composer.json composer.lock* ./
+COPY package.json package-lock.json* ./
 
-# Copy the rest of the application
+# Install dependencies
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev --no-scripts
+RUN npm install
+
+# Copy application code
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts
+# Set up Laravel
+RUN cp .env.example .env || echo "APP_ENV=production" > .env
+RUN php artisan key:generate --ansi
+RUN php artisan config:cache
+RUN php artisan route:cache
+RUN php artisan view:cache
 
-# Build Vite frontend assets
+# Build Vite assets
 RUN npm run build
 
-# ✅ Confirm build folder
-RUN echo "=== Checking built files ===" && ls -la public/build || echo "⚠️ No build folder found!"
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html/storage \
+    && chmod -R 755 /var/www/html/bootstrap/cache
+
+# Verify build output
+RUN ls -la public/build || echo "⚠️ Build folder not found!"
 
 # Expose port
 EXPOSE 8080
 
-# ✅ Serve from /public folder (static assets + Laravel routes)
-CMD php -S 0.0.0.0:${PORT:-8080} -t public public/index.php
+# Start PHP built-in server
+CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
