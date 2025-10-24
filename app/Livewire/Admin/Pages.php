@@ -65,7 +65,7 @@ class Pages extends Component implements HasForms, HasTable
             Forms\Components\FileUpload::make('thumbnail')
                 ->image()
                 ->required()
-                ->disk('s3')
+                ->disk('imagekit')
                 ->directory('pages')
                 ->visibility('publico')
                 ->imageResizeMode('cover')

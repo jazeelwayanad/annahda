@@ -45,7 +45,7 @@ class User extends Authenticatable
 
     public function getProfileUrlAttribute(): string
     {
-        return Storage::disk('s3')->url($this->profile);
+        return Storage::disk('imagekit')->url($this->profile);
     }
 
     public function addresses(): HasMany

@@ -26,7 +26,7 @@ class Popups extends Component implements HasForms, HasTable
             ->query(PopupModel::query())
             ->columns([
                 Columns\ImageColumn::make('image')
-                    ->disk('s3'),
+                    ->disk('imagekit'),
                 Columns\TextColumn::make('redirect_url'),
                 Columns\TextColumn::make('start_date')->date(),
                 Columns\TextColumn::make('end_date')->date(),
@@ -73,7 +73,7 @@ class Popups extends Component implements HasForms, HasTable
             Forms\Components\FileUpload::make('image')
                 ->image()
                 ->required()
-                ->disk('s3')
+                ->disk('imagekit')
                 ->directory('popups')
                 ->visibility('publico'),
             Forms\Components\TextInput::make('redirect_url'),

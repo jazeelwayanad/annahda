@@ -26,7 +26,7 @@ class ListArticles extends Component implements HasForms, HasTable
             ->query(Article::where('user_id', $userId)->where('status', '!=', 'rejected')->where('deleted_at', NULL))
             ->columns([
                 Columns\ImageColumn::make('thumbnail')
-                    ->disk('s3'),
+                    ->disk('imagekit'),
                 Columns\TextColumn::make('title')
                     ->searchable(),
                 Columns\TextColumn::make('slug')

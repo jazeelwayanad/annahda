@@ -23,6 +23,6 @@ class Page extends Model
 
     public function getThumbnailUrlAttribute(): string
     {
-        return Storage::disk('s3')->url($this->thumbnail);
+        return Storage::disk('imagekit')->url($this->thumbnail);
     }
 }

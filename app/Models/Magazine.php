@@ -23,7 +23,7 @@ class Magazine extends Model
 
     public function getCoverImageUrlAttribute(): string
     {
-        return Storage::disk('s3')->url($this->cover_image);
+        return Storage::disk('imagekit')->url($this->cover_image);
     }
 
     public function articles(): HasMany

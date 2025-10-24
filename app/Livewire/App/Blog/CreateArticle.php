@@ -42,14 +42,14 @@ class CreateArticle extends Component implements HasForms
                             ->unique(Article::class, 'slug'),
                         Forms\Components\RichEditor::make('content')
                             ->required()
-                            ->fileAttachmentsDisk('s3')
+                            ->fileAttachmentsdisk('imagekit')
                             ->fileAttachmentsDirectory('blog/attachments'),
                     ]),
                     Forms\Components\Section::make('Featured Image')->schema([
                         Forms\Components\FileUpload::make('thumbnail')
                             ->image()
                             ->required()
-                            ->disk('s3')
+                            ->disk('imagekit')
                             ->directory('blog')
                             ->visibility('publico')
                             ->imageResizeMode('cover')

@@ -22,7 +22,7 @@ class Category extends Model
 
     public function getImageUrlAttribute(): string
     {
-        return Storage::disk('s3')->url($this->image);
+        return Storage::disk('imagekit')->url($this->image);
     }
 
     public function articles(): HasMany

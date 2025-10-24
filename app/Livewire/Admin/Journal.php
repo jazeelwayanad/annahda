@@ -57,7 +57,7 @@ class Journal extends Component implements HasForms, HasTable
                             Forms\Components\TextInput::make('amount')->numeric()->inputMode('decimal')->required(),
                             Forms\Components\FileUpload::make('attachment')
                                 ->maxSize(3072)
-                                ->disk('s3')
+                                ->disk('imagekit')
                                 ->directory('journal')
                                 ->visibility('publico'),
                         ])

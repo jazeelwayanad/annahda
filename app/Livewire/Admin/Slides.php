@@ -29,7 +29,7 @@ class Slides extends Component implements HasForms, HasTable
                 Columns\TextColumn::make('type'),
                 Columns\TextColumn::make('article.title'),
                 Columns\ImageColumn::make('image')
-                    ->disk('s3'),
+                    ->disk('imagekit'),
                 Columns\TextColumn::make('link'),
                 Columns\TextColumn::make('status')
                 ->label('Status') 
@@ -71,7 +71,7 @@ class Slides extends Component implements HasForms, HasTable
 
             Forms\Components\FileUpload::make('image')
                 ->image()
-                ->disk('s3')
+                ->disk('imagekit')
                 ->directory('slides')
                 ->visibility('private')
                 ->imageCropAspectRatio('1.91:1')

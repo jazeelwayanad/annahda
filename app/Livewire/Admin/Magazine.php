@@ -28,7 +28,7 @@ class Magazine extends Component implements HasForms, HasTable
             ->query(MagazineModel::query()) 
             ->columns([
                 Columns\ImageColumn::make('cover_image')
-                    ->disk('s3'),
+                    ->disk('imagekit'),
                 Columns\TextColumn::make('year'),
                 Columns\TextColumn::make('start_month'),
                 Columns\TextColumn::make('end_month'),
@@ -105,7 +105,7 @@ class Magazine extends Component implements HasForms, HasTable
                 Forms\Components\FileUpload::make('cover_image')
                     ->image()
                     ->required()
-                    ->disk('s3')
+                    ->disk('imagekit')
                     ->directory('magazine')
                     ->visibility('publico')
                     ->imageResizeMode('cover')

@@ -27,7 +27,7 @@ class Users extends Component implements HasForms, HasTable
                 Columns\ImageColumn::make('profile')
                     ->circular()
                     ->defaultImageUrl(asset('assets/profile-avatar.jpg'))
-                    ->disk('s3'),
+                    ->disk('imagekit'),
                 Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
@@ -53,7 +53,7 @@ class Users extends Component implements HasForms, HasTable
             Forms\Components\FileUpload::make('profile')
                 ->image()
                 ->avatar()
-                ->disk('s3')
+                ->disk('imagekit')
                 ->directory('profiles')
                 ->visibility('publico'),
             Forms\Components\Hidden::make('type')
