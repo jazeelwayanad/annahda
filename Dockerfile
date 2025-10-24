@@ -39,4 +39,5 @@ RUN echo "=== Checking built files ===" && ls -la public/build || echo "⚠️ N
 EXPOSE 8080
 
 # ✅ Serve from /public folder (static assets + Laravel routes)
-CMD php -S 0.0.0.0:${PORT:-8080} -t public public/index.php
+# CMD php -S 0.0.0.0:${PORT:-8080} -t public public/index.php
+CMD echo "=== Listing public/ folder ===" && ls -la public && echo "=== Listing public/build ===" && ls -la public/build && echo "=== Starting PHP ===" && php -S 0.0.0.0:${PORT:-8080} -t public public/index.php
