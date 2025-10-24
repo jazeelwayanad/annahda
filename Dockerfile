@@ -32,6 +32,9 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-s
 # ✅ Build Vite assets (this was missing)
 RUN npm run build
 
+# 👀 Debug: Show what got built (just for confirmation)
+RUN echo "=== Checking built files ===" && ls -la public/build || echo "⚠️ No build folder found!"
+
 # Expose port
 EXPOSE 8080
 
